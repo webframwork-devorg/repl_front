@@ -1,0 +1,6 @@
+@import "@fontsource/inter";
+@import "tailwindcss";
+
+body {
+  font-family: var(--font-sans);
+}
