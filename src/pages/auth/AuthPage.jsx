@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
-import BasicButton from "@/commons/buttons/BasicButton";
+import BasicButton from "@/components/commons/buttons/BasicButton";
 
 function AuthPage() {
   const handleLogin = async () => {

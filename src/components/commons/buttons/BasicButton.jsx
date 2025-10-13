@@ -3,7 +3,6 @@ import React from "react";
 /**
 // 블랙 버튼
 // 화이트 버튼
-<CommonButton variant="white">
 
 @param {object} props - 컴포넌트 props
 @param {React.ReactNode} props.children - 버튼 안에 들어갈 내용
