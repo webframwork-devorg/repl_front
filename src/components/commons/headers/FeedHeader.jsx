@@ -1,5 +1,5 @@
 import React from "react";
-import Hamburger from "@/assets/hamburger.svg";
+import Hamburger from "@/assets/images/hamburger.svg";
 import { useNavigate } from "react-router-dom";
 
 function FeedHeader() {
