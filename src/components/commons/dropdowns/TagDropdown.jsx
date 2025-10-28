@@ -13,10 +13,11 @@ function TagDropdown({ tags = [], initialSelected = [], onChange }) {
       let updated;
 
       if (exists) {
-        updated = prev.filter((t) => t !== tag); 
+        updated = prev.filter((t) => t !== tag);
       } else if (prev.length < 2) {
-        updated = [...prev, tag]; 
-        updated = prev;
+        updated = [...prev, tag]; // ✅ 여기까지만!
+      } else {
+        updated = prev; // ✅ 2개 이상일 땐 그대로 유지
       }
 
       onChange?.(updated);
@@ -39,7 +40,10 @@ function TagDropdown({ tags = [], initialSelected = [], onChange }) {
       : "#태그 선택";
 
   return (
-    <div ref={ref} className="flex justify-start relative w-[110px] select-none">
+    <div
+      ref={ref}
+      className="flex justify-start relative w-[110px] select-none"
+    >
       <div
         onClick={toggleDropdown}
         className="flex items-center gap-2 cursor-pointer"
