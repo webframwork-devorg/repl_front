@@ -15,9 +15,9 @@ function TagDropdown({ tags = [], initialSelected = [], onChange }) {
       if (exists) {
         updated = prev.filter((t) => t !== tag);
       } else if (prev.length < 2) {
-        updated = [...prev, tag]; // ✅ 여기까지만!
+        updated = [...prev, tag]; 
       } else {
-        updated = prev; // ✅ 2개 이상일 땐 그대로 유지
+        updated = prev;
       }
 
       onChange?.(updated);

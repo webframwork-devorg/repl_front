@@ -115,10 +115,10 @@ function LandingPage() {
   }, [sort, selectedTags]);
 
   useEffect(() => {
-    console.log("✅ 정렬 기준:", sort);
-    console.log("✅ 선택된 태그:", selectedTags);
+    console.log("정렬 기준:", sort);
+    console.log("선택된 태그:", selectedTags);
     console.log(
-      "✅ 피드 목록:",
+      " 피드 목록:",
       feedList.map((f) => f.mainCard.title)
     );
   }, [sort, selectedTags, feedList]);
@@ -142,7 +142,6 @@ function LandingPage() {
           </div>
         </div>
 
-        {/* 🔹 피드 리스트 */}
         <div className="flex flex-col gap-10 mt-[15px]">
           {feedList.map((feed, idx) => (
             <CardList key={idx} {...feed} />
