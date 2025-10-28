@@ -13,11 +13,10 @@ function TagDropdown({ tags = [], initialSelected = [], onChange }) {
       let updated;
 
       if (exists) {
-        updated = prev.filter((t) => t !== tag); // 선택 해제
+        updated = prev.filter((t) => t !== tag); 
       } else if (prev.length < 2) {
-        updated = [...prev, tag]; // 최대 2개까지
-      } else {
-        updated = prev; // 2개 이상 선택 불가
+        updated = [...prev, tag]; 
+        updated = prev;
       }
 
       onChange?.(updated);

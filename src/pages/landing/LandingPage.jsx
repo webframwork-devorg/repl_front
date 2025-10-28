@@ -7,7 +7,6 @@ function LandingPage() {
   const [selectedTags, setSelectedTags] = useState([]);
   const [sort, setSort] = useState("latest");
 
-  // 🔹 목데이터 (나중에 fetch로 교체 가능)
   const mockTags = ["감동", "소설", "희망", "여행", "힐링", "일상"];
   const sortOptions = [
     { value: "latest", label: "최신순" },
@@ -16,11 +15,11 @@ function LandingPage() {
   ];
 
   useEffect(() => {
-    console.log("✅ 선택된 태그:", selectedTags);
+    console.log("선택된 태그:", selectedTags);
   }, [selectedTags]);
 
   useEffect(() => {
-    console.log("✅ 정렬 기준:", sort);
+    console.log("정렬 기준:", sort);
   }, [sort]);
 
   return (
