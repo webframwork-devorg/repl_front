@@ -48,7 +48,7 @@ function TagDropdown({ tags = [], initialSelected = [], onChange }) {
         onClick={toggleDropdown}
         className="flex items-center gap-2 cursor-pointer"
       >
-        <span className="font-bold text-[14px] text-[#828282]">{label}</span>
+        <span className="font-bold text-[16px] text-[#828282]">{label}</span>
       </div>
 
       {isDropdownOpen && (

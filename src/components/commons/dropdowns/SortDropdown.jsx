@@ -34,7 +34,7 @@ function SortDropdown({ options = [], initialValue, onChange }) {
         onClick={toggleDropdown}
         className="flex items-center gap-2 cursor-pointer"
       >
-        <span className="font-bold text-[14px] text-[#828282]">
+        <span className="font-bold text-[15px] text-[#828282]">
           {selected?.label || ""}
         </span>
         <img

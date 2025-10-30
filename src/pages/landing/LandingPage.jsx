@@ -20,7 +20,7 @@ function LandingPage() {
   useEffect(() => {
     const mockData = [
       {
-        username: "min3eo__",
+        username: "min3eo",
         count: 3,
         likes: 58,
         createdAt: "2025-10-30T21:00:00Z",
@@ -115,7 +115,7 @@ function LandingPage() {
   }, [sort, selectedTags]);
 
   useEffect(() => {
-    console.log("정렬 기준:", sort);
+    console.log("I정렬 기준:", sort);
     console.log("선택된 태그:", selectedTags);
     console.log(
       " 피드 목록:",
@@ -124,9 +124,9 @@ function LandingPage() {
   }, [sort, selectedTags, feedList]);
 
   return (
-    <div className="px-[15px] py-[15px] bg-[#1F1F1F] min-h-screen">
+    <div className="pb-[15px] bg-[#0f0f0f] min-h-screen">
       <div>
-        <div className="flex flex-col gap-[35px]">
+        <div className="flex flex-col gap-[20px] sticky top-0 z-50 px-[15px] pt-[15px] pb-[10px] bg-[#0f0f0f]">
           <FeedHeader />
           <div className="flex justify-between">
             <TagDropdown
@@ -142,7 +142,7 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-10 mt-[15px]">
+        <div className="flex flex-col gap-10 px-[15px]">
           {feedList.map((feed, idx) => (
             <CardList key={idx} {...feed} />
           ))}
