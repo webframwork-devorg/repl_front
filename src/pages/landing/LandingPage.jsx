@@ -126,7 +126,7 @@ function LandingPage() {
   return (
     <div className="pb-[15px] bg-[#0f0f0f] min-h-screen">
       <div>
-        <div className="flex flex-col gap-[20px] sticky top-0 z-50 px-[15px] pt-[15px] pb-[10px] bg-[#0f0f0f]">
+        <div className="flex flex-col gap-[10px] sticky top-0 z-50 px-[15px] pt-[20px] pb-[20px] bg-[#0f0f0f]">
           <FeedHeader />
           <div className="flex justify-between">
             <TagDropdown
@@ -142,7 +142,8 @@ function LandingPage() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-10 px-[15px]">
+        {/* 갭 간격 고민중 */}
+        <div className="flex flex-col gap-3 px-[15px]">
           {feedList.map((feed, idx) => (
             <CardList key={idx} {...feed} />
           ))}

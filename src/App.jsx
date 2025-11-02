@@ -14,7 +14,15 @@ import { supabase } from "@/lib/supabaseClient";
 function App() {
   const fetchSession = useAuthStore((s) => s.fetchSession);
   const setSession = useAuthStore((s) => s.setSession);
+  useEffect(() => {
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        console.log("[AuthStateChange]", event, session);
+      }
+    );
 
+    return () => listener.subscription.unsubscribe();
+  }, []);
   useEffect(() => {
     fetchSession();
     const {
