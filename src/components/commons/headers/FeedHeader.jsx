@@ -16,7 +16,7 @@ function FeedHeader() {
 
   return (
     <header className="flex justify-between items-center w-full">
-      <div class="text-2xl font-semibold text-white" onClick={onFeedClick}>피드</div>
+      <div className="text-2xl font-semibold text-white" onClick={onFeedClick}>피드</div>
       <div onClick={onHamburgerClick}>
         <img src={Hamburger} />
       </div>
