@@ -4,7 +4,10 @@ import TagDropdown from "@/components/commons/dropdowns/TagDropdown";
 import SortDropdown from "@/components/commons/dropdowns/SortDropdown";
 import CardList from "@/components/commons/cardList/CardList";
 
+import { getPlaylists } from "@/api/playlists/getPlaylists";
+
 function LandingPage() {
+  const [playlists, setPlaylists] = useState([]); 
   const [feedList, setFeedList] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sort, setSort] = useState("latest");
@@ -16,6 +19,21 @@ function LandingPage() {
   ];
 
   const mockTags = ["감동", "소설", "희망", "여행", "힐링", "일상"];
+
+    useEffect(() => {
+      async function fetchPlaylists() {
+        try {
+          const data = await getPlaylists(); 
+          setPlaylists(data);
+          console.log("플레이리스트 데이터:", data);
+        } catch (err) {
+          console.error("에러:", err);
+        } finally {
+          console.log("플레이리스트 데이터 로드 완료");}
+      }
+
+      fetchPlaylists();
+    }, []);
 
   useEffect(() => {
     const mockData = [
@@ -124,7 +142,7 @@ function LandingPage() {
   }, [sort, selectedTags, feedList]);
 
   return (
-    <div className="pb-[15px] bg-[#0f0f0f] min-h-screen">
+    <div className="pb-[15px] bg-black min-h-screen">
       <div>
         <div className="flex flex-col gap-[10px] sticky top-0 z-50 px-[15px] pt-[20px] pb-[20px] bg-[#0f0f0f]">
           <FeedHeader />

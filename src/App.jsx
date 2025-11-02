@@ -8,7 +8,7 @@ import ErrorPage from "@/pages/error/ErrorPage";
 import AuthCallback from "@/pages/auth/AuthCallback";
 
 import { useAuthStore } from "@/stores/useAuthStore";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/api/supabaseClient";
 
 function App() {
   const fetchSession = useAuthStore((s) => s.fetchSession);
