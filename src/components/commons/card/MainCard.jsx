@@ -1,13 +1,13 @@
 import React from "react";
 
-function MainCard({ imageUrl, title, tags = [] }) {
+function MainCard({ image, title, tags = [] }) {
   const displayedTags = tags.slice(0, 2);
 
   return (
     <div
-      className="relative w-[240px] h-[320px] rounded-2xl overflow-hidden shadow- bg-[#2C2C2C] flex-shrink-0"
+      className="relative w-[240px] h-[320px] rounded-2xl overflow-hidden shadow bg-[#2C2C2C] flex-shrink-0"
       style={{
-        backgroundImage: `url(${imageUrl})`,
+        backgroundImage: `url(${image?.trim()})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
