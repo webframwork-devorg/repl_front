@@ -5,9 +5,11 @@ import SortDropdown from "@/components/commons/dropdowns/SortDropdown";
 import CardList from "@/components/commons/cardList/CardList";
 
 import { getPlaylists } from "@/api/playlists/getPlaylists";
+import { getTags } from "@/api/tags/getTags";
 
 function LandingPage() {
   const [playlists, setPlaylists] = useState([]);
+  const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sort, setSort] = useState("latest");
   const [loading, setLoading] = useState(false);
@@ -18,15 +20,30 @@ function LandingPage() {
     { value: "title", label: "제목순" },
   ];
 
-  const mockTags = ["감동", "소설", "희망", "여행", "힐링", "일상"];
+useEffect(() => {
+  async function fetchPlaylists() {
+    setLoading(true);
+    try {
+      const data = await getPlaylists(sort, selectedTags); // ✅ 태그도 전달
+      setPlaylists(data);
+      console.log("플레이리스트 데이터:", data);
+    } catch (err) {
+      console.error("에러:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchPlaylists();
+}, [sort, selectedTags]);
 
   useEffect(() => {
-    async function fetchPlaylists() {
+    async function fetchTags() {
       setLoading(true);
       try {
-        const data = await getPlaylists(sort);
-        setPlaylists(data);
-        console.log("플레이리스트 데이터:", data);
+        const data = await getTags(sort);
+        setTags(data);
+        console.log("태그 데이터:", data);
       } catch (err) {
         console.error("에러:", err);
       } finally {
@@ -34,8 +51,8 @@ function LandingPage() {
       }
     }
 
-    fetchPlaylists();
-  }, [sort]);
+    fetchTags();
+  }, [sort, selectedTags]);
 
   return (
     <div className="pb-[15px] bg-black min-h-screen">
@@ -44,8 +61,7 @@ function LandingPage() {
           <FeedHeader />
           <div className="flex justify-between">
             <TagDropdown
-              tags={mockTags}
-              initialSelected={["감동"]}
+              tags={tags}
               onChange={setSelectedTags}
             />
             <SortDropdown
@@ -70,7 +86,7 @@ function LandingPage() {
                 mainCard={{
                   image: item.image,
                   title: item.title,
-                  tags: ["감동"],
+                  tags: item.tags,
                 }}
                 subCards={[]}
               />

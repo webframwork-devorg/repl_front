@@ -5,23 +5,22 @@ function TagDropdown({ tags = [], initialSelected = [], onChange }) {
   const [selectedTags, setSelectedTags] = useState(initialSelected);
   const ref = useRef(null);
 
+  useEffect(() => {
+    onChange?.(selectedTags);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTags]); 
+
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   const handleTagSelect = (tag) => {
     setSelectedTags((prev) => {
       const exists = prev.includes(tag);
-      let updated;
-
       if (exists) {
-        updated = prev.filter((t) => t !== tag);
+        return prev.filter((t) => t !== tag);
       } else if (prev.length < 2) {
-        updated = [...prev, tag]; 
-      } else {
-        updated = prev;
+        return [...prev, tag];
       }
-
-      onChange?.(updated);
-      return updated;
+      return prev;
     });
   };
 
@@ -42,7 +41,7 @@ function TagDropdown({ tags = [], initialSelected = [], onChange }) {
   return (
     <div
       ref={ref}
-      className="flex justify-start relative w-[110px] select-none"
+      className="flex justify-start relative w-[130px] select-none"
     >
       <div
         onClick={toggleDropdown}
@@ -56,7 +55,8 @@ function TagDropdown({ tags = [], initialSelected = [], onChange }) {
           className="absolute top-full mt-2 border border-[#2C2C2C]
                      bg-[#1F1F1F] rounded-lg shadow-lg z-50 overflow-hidden"
         >
-          {tags.map((tag) => {
+          {tags.map((tagObj) => {
+            const tag = tagObj.name || tagObj;
             const isSelected = selectedTags.includes(tag);
             const isFull = selectedTags.length >= 2 && !isSelected;
 
