@@ -6,7 +6,7 @@ import React from "react";
  */
 
 function QuoteBox({ text, className = "" }) {
-  const baseStyle = "w-full h-[80px] p-4 rounded-[15px] border border-white bg-black text-white font-bold";
+  const baseStyle = "w-full p-4 rounded-[15px] border border-white bg-black text-white font-bold text-[14px]";
   
   return (
     <div className={`${baseStyle} ${className}`}>
