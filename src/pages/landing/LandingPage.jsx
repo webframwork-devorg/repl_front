@@ -3,6 +3,8 @@ import FeedHeader from "@/components/commons/headers/FeedHeader";
 import TagDropdown from "@/components/commons/dropdowns/TagDropdown";
 import SortDropdown from "@/components/commons/dropdowns/SortDropdown";
 import CardList from "@/components/commons/cardList/CardList";
+import FloatingMenu from "@/components/commons/floating/FloatingMenu";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
 import { getPlaylists } from "@/api/playlists/getPlaylists";
 import { getTags } from "@/api/tags/getTags";
@@ -56,6 +58,11 @@ useEffect(() => {
 
     fetchTags();
   }, [sort, selectedTags]);
+   const menuItems = [
+      { icon: <FaPencilAlt />, label: "수정", path: "/edit" },
+      { icon: <FaTrash />, label: "삭제", path: "/delete" },
+    ];
+  
 
   return (
     <div className="pb-[15px] bg-black min-h-screen">
@@ -95,6 +102,7 @@ useEffect(() => {
           </div>
         )}
       </div>
+      <FloatingMenu menuItems={menuItems} />
     </div>
   );
 }
