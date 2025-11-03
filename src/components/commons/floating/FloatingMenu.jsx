@@ -1,15 +1,23 @@
 import { useState, useRef, useEffect } from "react";
-import { FaPlus, FaPencilAlt, FaTrash } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 import "./FloatingMenu.css";
 
-function FloatingMenu({ onClick, className = "" }) {
+/**
+ * @param {Array} menuItems = [{ icon: <FaPencilAlt />, label: "수정", path: "/edit" }]
+ */
+function FloatingMenu({ menuItems = [] }) {
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
   
   const showFloatingMenuHandler = () => {
     setOpenMenu((prev) => !prev);
-    if (onClick) {
-      onClick();
+  };
+
+  const handleSubMenuClick = (path) => {
+    if (path) {
+      navigate(path);
     }
   };
 
@@ -30,16 +38,13 @@ function FloatingMenu({ onClick, className = "" }) {
     <div className="floating-menu" ref={menuRef}>
       {openMenu && (
         <ul className="menu-btns">
-          <li>
-            <button type="button" className="sub-menu" aria-label="수정">
-              <FaPencilAlt />
-            </button>
-          </li>
-          <li>
-            <button type="button" className="sub-menu" aria-label="삭제">
-              <FaTrash />
-            </button>
-          </li>
+          {menuItems.map((item, index) => (
+            <li key={index}>
+              <button type="button" className="sub-menu" onClick={() => handleSubMenuClick(item.path)} aria-label={item.label}>
+                {item.icon}
+              </button>
+            </li>
+          ))}
         </ul>
       )}
       <button
