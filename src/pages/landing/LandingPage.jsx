@@ -6,8 +6,11 @@ import CardList from "@/components/commons/cardList/CardList";
 
 import { getPlaylists } from "@/api/playlists/getPlaylists";
 import { getTags } from "@/api/tags/getTags";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
+  const navigate = useNavigate();
+
   const [playlists, setPlaylists] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -60,10 +63,7 @@ useEffect(() => {
         <div className="flex flex-col gap-[10px] sticky top-0 z-50 px-[15px] pt-[20px] pb-[20px] bg-black">
           <FeedHeader />
           <div className="flex justify-between">
-            <TagDropdown
-              tags={tags}
-              onChange={setSelectedTags}
-            />
+            <TagDropdown tags={tags} onChange={setSelectedTags} />
             <SortDropdown
               options={sortOptions}
               initialValue="latest"
@@ -82,13 +82,14 @@ useEffect(() => {
               <CardList
                 key={idx}
                 username={item.username}
-                count={item.subCards.length}
+                count={item.subCards.length + 1}
                 mainCard={{
                   image: item.image,
                   title: item.title,
                   tags: item.tags,
                 }}
                 subCards={item.subCards}
+                onClick={() => navigate(`/list/${item.id}`)}
               />
             ))}
           </div>

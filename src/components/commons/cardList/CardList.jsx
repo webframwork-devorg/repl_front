@@ -2,7 +2,7 @@ import React from "react";
 import MainCard from "@/components/commons/card/MainCard";
 import SubCard from "@/components/commons/card/SubCard";
 
-function CardList({ username, count, mainCard, subCards = [] }) {
+function CardList({ username, count, mainCard, subCards = [], onClick }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex justify-start items-center gap-[7px] text-[13px] font-semibold text-[#828282]">
@@ -11,7 +11,7 @@ function CardList({ username, count, mainCard, subCards = [] }) {
         <span>{count}개</span>
       </div>
       <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide">
-        <MainCard {...mainCard} />
+        <MainCard {...mainCard} onClick={onClick} />{" "}
         {subCards.map((card, idx) => (
           <SubCard key={idx} {...card} />
         ))}
