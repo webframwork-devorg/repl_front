@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import "./FloatingMenu.css";
 
 /**
- * @param {Array} menuItems = [{ icon: <FaPencilAlt />, label: "수정", path: "/edit" }]
+ * @param {Array} menuItems - [{ icon: <FaPencilAlt />, label: "수정", path: "/edit" }]
+ * @param {Array} menuItems - [{ icon: <FaTrash />, label: "삭제", path: "/delete" }]
  */
 function FloatingMenu({ menuItems = [] }) {
   const [openMenu, setOpenMenu] = useState(false);
@@ -35,12 +35,17 @@ function FloatingMenu({ menuItems = [] }) {
   }, [menuRef]);
   
   return (
-    <div className="floating-menu" ref={menuRef}>
+    <div className="fixed bottom-10 right-10" ref={menuRef}>
       {openMenu && (
-        <ul className="menu-btns">
+        <ul className="flex flex-col items-center mb-2.5 animate-fadeIn">
           {menuItems.map((item, index) => (
             <li key={index}>
-              <button type="button" className="sub-menu" onClick={() => handleSubMenuClick(item.path)} aria-label={item.label}>
+              <button
+                type="button"
+                className="w-[50px] h-[50px] rounded-full bg-[#474749] text-white border border-black flex items-center justify-center shadow-md cursor-pointer mb-2.5 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-[#5f5c5c]"
+                onClick={() => handleSubMenuClick(item.path)}
+                aria-label={item.label}
+              >
                 {item.icon}
               </button>
             </li>
@@ -49,13 +54,15 @@ function FloatingMenu({ menuItems = [] }) {
       )}
       <button
         type="button"
-        className={`menu-btn ${openMenu ? "open" : ""}`}
+        className={`w-[60px] h-[60px] rounded-full bg-[#474749] text-white border-none flex items-center justify-center shadow-[0_4px_8px_rgba(251,251,251,0.2)] cursor-pointer transition-transform duration-300 ease-in-out ${
+          openMenu ? "rotate-45" : ""
+        }`}
         onClick={showFloatingMenuHandler}
       >
         <FaPlus />
       </button>
     </div>
-    );
+  );
 }
 
 export default FloatingMenu;

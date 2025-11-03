@@ -7,8 +7,8 @@ function ListPage() {
   const baseStyle = "bg-black min-h-screen";
 
   const menuItems = [
-    { icon: <FaPencilAlt />, label: "수정", path: "/edit-page" },
-    { icon: <FaTrash />, label: "삭제", path: "/delete-page" },
+    { icon: <FaPencilAlt />, label: "수정", path: "/edit" },
+    { icon: <FaTrash />, label: "삭제", path: "/delete" },
   ];
 
   return (
