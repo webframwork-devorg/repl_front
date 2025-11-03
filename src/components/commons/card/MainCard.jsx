@@ -6,7 +6,7 @@ function MainCard({ image, title, tags = [],  onClick }) {
   return (
     <div
       onClick={onClick}
-      className="relative w-[240px] h-[320px] rounded-2xl overflow-hidden shadow bg-[#2C2C2C] flex-shrink-0"
+      className="relative w-[240px] h-[320px] rounded-xl overflow-hidden shadow bg-[#2C2C2C] flex-shrink-0"
       style={{
         backgroundImage: `url(${image?.trim()})`,
         backgroundSize: "cover",
