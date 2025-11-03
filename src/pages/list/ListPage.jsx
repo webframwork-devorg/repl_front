@@ -1,6 +1,11 @@
 import QuoteBox from "@/components/commons/textBox/QuoteBox";
 import FloatingMenu from "@/components/commons/floating/FloatingMenu";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
+import { useEffect, useState } from "react";
+
+import { getPlaylistById } from "@/api/playlists/getPlaylistById";
+import { getPlaylistTags } from "@/api/tags/getPlaylistTags";
+
 
 function ListPage() {
   const quoteText = "너는 지금 어떻게 지내? 넌 내 좋은 추억이었어";
@@ -16,7 +21,7 @@ function ListPage() {
     <div className={baseStyle}>
       < QuoteBox
        text={quoteText}
-       className="max-w-[600px] mx-auto mt-20 text-center" 
+       className="max-w-[600px] mx-auto text-center" 
      />
       <FloatingMenu menuItems={menuItems}/>
     </div>
