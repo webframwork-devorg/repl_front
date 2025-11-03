@@ -1,4 +1,4 @@
-import QuoteBox from "@/components/commons/quoteBox/QuoteBox";
+import QuoteBox from "@/components/commons/textBox/QuoteBox";
 import FloatingMenu from "@/components/commons/floating/FloatingMenu";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
