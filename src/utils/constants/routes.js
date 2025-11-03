@@ -1,6 +1,7 @@
 const routes = {
   auth: "/auth",
   home: "/",
+  list: "/list/:id",
   error: "*",
 };
 
