@@ -6,6 +6,7 @@ import AuthPage from "@/pages/auth/AuthPage";
 import LandingPage from "@/pages/landing/LandingPage";
 import ListPage from "@/pages/list/ListPage";
 import ErrorPage from "@/pages/error/ErrorPage";
+import BookPage from "@/pages/book/BookPage";
 import AuthCallback from "@/pages/auth/AuthCallback";
 
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -42,6 +43,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path={routes.auth} element={<AuthPage />} />
       <Route path={routes.list} element={<ListPage />} />
+      <Route path="/book/:id" element={<BookPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
