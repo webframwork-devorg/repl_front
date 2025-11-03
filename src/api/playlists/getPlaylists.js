@@ -95,10 +95,10 @@ export async function getPlaylists(sort = "latest", selectedTags = []) {
         })) || [],
     }));
 
-    console.log("✅ 최종 변환 데이터:", formatted);
+    console.log("최종 변환 데이터:", formatted);
     return formatted;
   } catch (error) {
-    console.error("❌ 플레이리스트 불러오기 실패:", error.message);
+    console.error("플레이리스트 불러오기 실패:", error.message);
     throw error;
   }
 }
