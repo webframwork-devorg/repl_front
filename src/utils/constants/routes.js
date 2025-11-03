@@ -3,6 +3,7 @@ const routes = {
   home: "/",
   list: "/list/:id",
   error: "*",
+  edit: "/edit",
 };
 
 export default routes;

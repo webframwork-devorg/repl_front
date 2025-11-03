@@ -7,6 +7,7 @@ import LandingPage from "@/pages/landing/LandingPage";
 import ListPage from "@/pages/list/ListPage";
 import ErrorPage from "@/pages/error/ErrorPage";
 import AuthCallback from "@/pages/auth/AuthCallback";
+import EditPage from "@/pages/edit/EditPage";
 
 import { useAuthStore } from "@/stores/useAuthStore";
 import { supabase } from "@/api/supabaseClient";
@@ -42,6 +43,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path={routes.auth} element={<AuthPage />} />
       <Route path={routes.list} element={<ListPage />} />
+      <Route path={routes.edit} element={<EditPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
