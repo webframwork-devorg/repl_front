@@ -1,20 +1,35 @@
 import { supabase } from "@/api/supabaseClient";
 
+
 export async function getPlaylists(sort = "latest", selectedTags = []) {
   try {
     const { data, error } = await supabase.from("playlists").select(`
         *,
         playlist_tags (
           tag_id,
-          tags (
-            tag_name
+          tags ( tag_name )
+        ),
+        playlist_items (
+          item_id,
+          book_id,
+          user_comment,
+          user_rating,
+          read_date,
+          books (
+            b_title,
+            author,
+            cover_image_url
+          ),
+          playlistitem_tags (
+            tag_id,
+            tags ( tag_name )
           )
         )
       `);
 
     if (error) throw error;
 
-    console.log("Supabase에서 받은 원본 데이터:", data);
+    console.log("upabase 원본 데이터:", data);
 
     let filtered = data;
 
@@ -48,8 +63,27 @@ export async function getPlaylists(sort = "latest", selectedTags = []) {
       likeCount: item.like_count,
       tags:
         item.playlist_tags?.map((t) => t.tags?.tag_name).filter(Boolean) || [],
+
+      subCards:
+        item.playlist_items?.map((sub) => ({
+          id: sub.item_id,
+          bookId: sub.book_id,
+          title: sub.books?.b_title || "제목 없음",
+          author: sub.books?.author || "작자 미상",
+          image:
+            sub.books?.cover_image_url ||
+            "https://via.placeholder.com/240x320?text=No+Image",
+          comment: sub.user_comment,
+          rating: sub.user_rating,
+          readDate: sub.read_date,
+          tags:
+            sub.playlistitem_tags
+              ?.map((t) => t.tags?.tag_name)
+              .filter(Boolean) || [],
+        })) || [],
     }));
 
+    console.log("최종 변환 데이터:", formatted);
     return formatted;
   } catch (error) {
     console.error("플레이리스트 불러오기 실패:", error.message);

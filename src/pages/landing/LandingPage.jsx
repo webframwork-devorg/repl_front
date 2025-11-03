@@ -24,7 +24,7 @@ useEffect(() => {
   async function fetchPlaylists() {
     setLoading(true);
     try {
-      const data = await getPlaylists(sort, selectedTags); // ✅ 태그도 전달
+      const data = await getPlaylists(sort, selectedTags);
       setPlaylists(data);
       console.log("플레이리스트 데이터:", data);
     } catch (err) {
@@ -82,13 +82,13 @@ useEffect(() => {
               <CardList
                 key={idx}
                 username={item.username}
-                count={1}
+                count={item.subCards.length}
                 mainCard={{
                   image: item.image,
                   title: item.title,
                   tags: item.tags,
                 }}
-                subCards={[]}
+                subCards={item.subCards}
               />
             ))}
           </div>
