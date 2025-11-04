@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
 
-function TextArea({ label = "내용 입력", maxLength = 300, onChange }) {
+function TextArea({ label = "내용 입력", maxLength, onChange }) {
   const [text, setText] = useState("");
 
   const handleChange = (e) => {

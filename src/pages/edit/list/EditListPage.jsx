@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import TextInput from "@/components/commons/inputs/TextInput";
-import TextArea from "@/components/commons/inputs/Textarea";
+import TextArea from "@/components/commons/inputs/TextArea";
 import FileInput from "@/components/commons/inputs/FileInput";
 import TagDropdown from "@/components/commons/dropdowns/TagDropdown";
 import { getTags } from "@/api/tags/getTags";
@@ -136,7 +136,7 @@ function EditListPage() {
         <TextArea
           onChange={handleContentChange}
           label="한줄평 작성하기"
-          maxLength={300}
+          maxLength={25}
         />
         <button
           type="submit"
