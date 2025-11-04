@@ -57,7 +57,7 @@ function App() {
         path={routes.list}
         element={
           <ProtectedRoute>
-            <ListPage />{" "}
+            <ListPage />
           </ProtectedRoute>
         }
       />
@@ -65,7 +65,7 @@ function App() {
         path={routes.editList}
         element={
           <ProtectedRoute>
-            <EditListPage />{" "}
+            <EditListPage />
           </ProtectedRoute>
         }
       />
@@ -73,7 +73,7 @@ function App() {
         path={routes.edit}
         element={
           <ProtectedRoute>
-            <EditPage />{" "}
+            <EditPage />
           </ProtectedRoute>
         }
       />
@@ -81,7 +81,7 @@ function App() {
         path="*"
         element={
           <ProtectedRoute>
-            <ErrorPage />{" "}
+            <ErrorPage />
           </ProtectedRoute>
         }
       />
