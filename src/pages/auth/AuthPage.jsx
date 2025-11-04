@@ -28,7 +28,7 @@ function AuthPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-end min-h-screen bg-[#1F1F1F] text-white px-[35px] py-[75px]">
+    <div className="flex flex-col items-center justify-end min-h-screen bg-black text-white px-[35px] py-[75px]">
       <section className="flex flex-col gap-[300px] justify-end w-full">
         <h1 className="flex justify-center w-full text-[64px] font-bold">
           re:pl
