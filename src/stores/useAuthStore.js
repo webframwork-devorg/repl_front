@@ -1,4 +1,3 @@
-// src/stores/useAuthStore.js
 import { create } from "zustand";
 import { supabase } from "@/api/supabaseClient";
 
@@ -10,7 +9,7 @@ export const useAuthStore = create((set) => ({
     const {
       data: { session },
     } = await supabase.auth.getSession();
-    set({ session, loading: false });
+    set({ session, loading: false }); 
   },
 
   setSession: (session) => set({ session }),

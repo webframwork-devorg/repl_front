@@ -54,7 +54,7 @@ function AuthCallback() {
   }, [navigate]);
 
   return (
-    <div className="flex font-bold items-center justify-center min-h-screen text-white bg-[#1F1F1F]">
+    <div className="flex font-bold items-center justify-center min-h-screen text-white bg-black">
       <p>로그인 중입니다... 잠시만 기다려주세요.</p>
     </div>
   );
