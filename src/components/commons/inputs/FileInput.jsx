@@ -1,127 +1,115 @@
 import { useState } from "react";
-import { FiX, FiImage } from "react-icons/fi";
+import { FiUploadCloud, FiX } from "react-icons/fi";
 
-function FileInput() {
-  const [fileName, setFileName] = useState("선택된 파일 없음");
-  const [url, setUrl] = useState("");
-  const [mode, setMode] = useState(null); 
+function FileInput({ onChange, label = "썸네일 선택" }) {
   const [preview, setPreview] = useState(null);
+  const [mode, setMode] = useState(null);
+  const [url, setUrl] = useState("");
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFileName(file.name);
+    const selected = e.target.files[0];
+    if (selected) {
+      const objectURL = URL.createObjectURL(selected);
+      setPreview(objectURL);
       setMode("file");
       setUrl("");
-      setPreview(URL.createObjectURL(file)); 
-    } else {
-      resetFile();
+      onChange({ type: "file", file: selected, preview: objectURL });
     }
   };
 
   const handleUrlChange = (e) => {
     const value = e.target.value;
     setUrl(value);
-    if (value !== "") {
-      setMode("url");
-      setFileName("선택된 파일 없음");
+    if (value) {
       setPreview(value);
+      setMode("url");
+      onChange({ type: "url", url: value, preview: value });
     } else {
-      resetUrl();
+      reset();
     }
   };
 
-  const resetFile = () => {
-    setFileName("선택된 파일 없음");
-    setMode(null);
+  const reset = () => {
     setPreview(null);
-  };
-
-  const resetUrl = () => {
     setUrl("");
     setMode(null);
-    setPreview(null);
+    onChange(null);
   };
 
   return (
-    <div className="flex flex-col items-center gap-5 w-full max-w-md mx-auto">
+    <div className="flex flex-col gap-3 w-full">
+      <div className="flex items-center gap-2 text-white text-[18px] font-bold">
+        <span>{label}</span>
+      </div>
+
       <div
-        className={`relative flex border ${
-          mode === "url" ? "opacity-50 cursor-not-allowed" : "border-gray-300"
-        } rounded-xl overflow-hidden w-full bg-white`}
+        className={`relative border border-gray-700 rounded-2xl p-6 bg-[#111111] text-gray-200 flex flex-col items-center justify-center gap-3 transition-all duration-300 hover:border-gray-500 ${
+          mode === "url" ? "opacity-50 pointer-events-none" : ""
+        }`}
       >
         <input
           type="file"
-          id="fileInput"
+          id="fileUpload"
           onChange={handleFileChange}
           className="hidden"
           disabled={mode === "url"}
         />
-        <label
-          htmlFor="fileInput"
-          className={`cursor-pointer px-4 py-2 font-semibold border-r border-gray-300 ${
-            mode === "url"
-              ? "pointer-events-none bg-gray-100 text-gray-400"
-              : "hover:bg-gray-100 transition text-black"
-          }`}
-        >
-          파일 선택
-        </label>
-        <span className="px-4 py-2 text-gray-500 truncate flex-1">
-          {fileName}
-        </span>
 
-        {mode === "file" && (
-          <button
-            onClick={resetFile}
-            className="absolute right-2 top-2 text-gray-400 hover:text-red-500"
+        {!preview && (
+          <label
+            htmlFor="fileUpload"
+            className="flex flex-col items-center justify-center cursor-pointer select-none group"
           >
-            <FiX size={18} />
-          </button>
+            <FiUploadCloud className="text-gray-400 text-4xl mb-2 transition-transform duration-300 group-hover:scale-110" />
+            <span className="text-sm text-gray-400">
+              파일을 선택하거나 드래그하세요
+            </span>
+          </label>
+        )}
+
+        {preview && (
+          <div className="relative w-full h-48 rounded-xl overflow-hidden border border-gray-700">
+            <img
+              src={preview}
+              alt="preview"
+              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            />
+            <button
+              type="button"
+              onClick={reset}
+              className="absolute top-2 right-2 bg-black/70 p-1.5 rounded-full text-gray-300 hover:text-white transition-colors"
+            >
+              <FiX size={16} />
+            </button>
+          </div>
         )}
       </div>
 
-      <div className="flex items-center w-full">
-        <div className="flex-grow border-t border-gray-400"></div>
-        <span className="px-3 text-gray-400 text-sm">또는</span>
-        <div className="flex-grow border-t border-gray-400"></div>
+      <div className="flex items-center">
+        <div className="flex-grow border-t border-gray-700"></div>
+        <span className="px-3 text-gray-500 text-sm">또는</span>
+        <div className="flex-grow border-t border-gray-700"></div>
       </div>
 
-      <div className="relative w-full">
+      <div className="relative">
         <input
           type="text"
-          placeholder="이미지 URL을 입력하세요"
+          placeholder="이미지 URL 입력"
           value={url}
           onChange={handleUrlChange}
           disabled={mode === "file"}
-          className={`w-full border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400 ${
-            mode === "file"
-              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : ""
+          className={`w-full bg-[#0d0d0d] border border-gray-700 rounded-xl px-4 py-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white transition-all ${
+            mode === "file" ? "opacity-50 cursor-not-allowed" : ""
           }`}
         />
-        {mode === "url" && (
+        {url && (
           <button
-            onClick={resetUrl}
-            className="absolute right-3 top-2.5 text-gray-400 hover:text-red-500"
+            type="button"
+            onClick={reset}
+            className="absolute right-3 top-3 text-gray-400 hover:text-red-500 transition"
           >
             <FiX size={18} />
           </button>
-        )}
-      </div>
-
-      <div className="w-full border border-gray-300 rounded-xl p-4 flex items-center justify-center bg-gray-50 h-48">
-        {preview ? (
-          <img
-            src={preview}
-            alt="미리보기"
-            className="max-h-full max-w-full object-contain rounded-lg shadow-sm"
-          />
-        ) : (
-          <div className="text-gray-400 flex flex-col items-center gap-2">
-            <FiImage size={24} />
-            <p className="text-sm">이미지 미리보기</p>
-          </div>
         )}
       </div>
     </div>
