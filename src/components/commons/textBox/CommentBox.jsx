@@ -6,7 +6,7 @@ import React from "react";
  */
 
 function CommentBox({ text, className = "" }) {
-  const baseStyle = "w-full px-[30px] py-[20px] rounded-[10px] border border-white bg-black text-white font-bold text-[12px]";
+  const baseStyle = "mx-4 w-90 px-[30px] py-[20px] rounded-[10px] border border-white bg-black text-white font-bold text-[12px]";
   
   return (
     <div className={`${baseStyle} ${className}`}>
