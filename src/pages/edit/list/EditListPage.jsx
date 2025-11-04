@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import TextInput from "@/components/commons/inputs/TextInput";
-import Area from "@/components/commons/inputsArea";
+import TextArea from "@/components/commons/inputs/TextArea";
 import FileInput from "@/components/commons/inputs/FileInput";
 import TagDropdown from "@/components/commons/dropdowns/TagDropdown";
 import { getTags } from "@/api/tags/getTags";

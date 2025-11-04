@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
 
-function Area({ label = "내용 입력", maxLength, onChange }) {
+function TextArea({ label = "내용 입력", maxLength, onChange }) {
   const [text, setText] = useState("");
 
   const handleChange = (e) => {
@@ -50,4 +50,4 @@ function Area({ label = "내용 입력", maxLength, onChange }) {
   );
 }
 
-export default Area;
+export default TextArea;
