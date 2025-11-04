@@ -4,10 +4,15 @@ import BasicButton from "@/components/commons/buttons/BasicButton";
 function AuthPage() {
   const handleLogin = async () => {
     try {
+      const redirectUrl =
+        import.meta.env.MODE === "development"
+          ? "http://localhost:5173/auth/callback"
+          : "https://replsite.netlify.app/auth/callback";
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "kakao",
         options: {
-          redirectTo: "http://localhost:5173/auth/callback",
+          redirectTo: redirectUrl, 
         },
       });
 
