@@ -16,9 +16,9 @@ function ListPage() {
     <div className={baseStyle}>
       < QuoteBox
        text={quoteText}
-       className="max-w-[600px] mx-auto mt-20 text-center" 
+       className="max-w-[600px] mx-auto text-center" 
      />
-      <FloatingMenu menuItems={menuItems}/>
+      <FloatingMenu />
     </div>
     </>
   ); 
