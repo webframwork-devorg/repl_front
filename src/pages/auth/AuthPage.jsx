@@ -4,10 +4,15 @@ import BasicButton from "@/components/commons/buttons/BasicButton";
 function AuthPage() {
   const handleLogin = async () => {
     try {
+      const redirectUrl =
+        import.meta.env.MODE === "development"
+          ? "http://localhost:5173/auth/callback"
+          : "https://replsite.netlify.app/auth/callback";
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "kakao",
         options: {
-          redirectTo: "http://localhost:5173/auth/callback",
+          redirectTo: redirectUrl, 
         },
       });
 
@@ -23,7 +28,7 @@ function AuthPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-end min-h-screen bg-[#1F1F1F] text-white px-[35px] py-[75px]">
+    <div className="flex flex-col items-center justify-end min-h-screen bg-black text-white px-[35px] py-[75px]">
       <section className="flex flex-col gap-[300px] justify-end w-full">
         <h1 className="flex justify-center w-full text-[64px] font-bold">
           re:pl

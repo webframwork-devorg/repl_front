@@ -59,7 +59,7 @@ useEffect(() => {
     fetchTags();
   }, [sort, selectedTags]);
    const menuItems = [
-      { icon: <FaPencilAlt />, label: "수정", path: "/edit" },
+      { icon: <FaPencilAlt />, label: "수정", path: "/edit/list" },
       { icon: <FaTrash />, label: "삭제", path: "/delete" },
     ];
   
@@ -84,7 +84,7 @@ useEffect(() => {
             로딩 중...
           </div>
         ) : (
-          <div className="flex flex-col gap-3 px-[15px]">
+          <div className="flex flex-col gap-5 px-[15px]">
             {playlists.map((item, idx) => (
               <CardList
                 key={idx}
