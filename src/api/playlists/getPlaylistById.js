@@ -30,10 +30,6 @@ export async function getPlaylistById(playlistId, sort = "latest", selectedTags 
           b_title,
           author,
           cover_image_url
-        ),
-        playlistitem_tags (
-          tag_id,
-          tags ( tag_name )
         )
       )
     `).eq('playlist_id', playlistId).single(); // .single()은 단일 객체를 반환합니다.
