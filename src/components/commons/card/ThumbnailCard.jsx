@@ -12,7 +12,7 @@ function ThumbnailCard({ image, title }) {
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-      <div className="absolute bottom-0 left-0 p-3 text-white font-extrabold text-[20px] leading-snug">
+      <div className="absolute bottom-0 left-0 p-3 text-white font-extrabold text-[16px] leading-snug">
           {title}
         </div>
     </div>
