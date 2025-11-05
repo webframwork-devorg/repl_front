@@ -14,7 +14,7 @@ function BookMark({ text }) {
      const baseStyle = `mx-4 w-90 h-25 bg-no-repeat bg-contain bg-center flex items-center justify-center p-5 text-black font-bold text-[13px] text-center whitespace-pre-wrap break-keep`;
     return (
         <div className={baseStyle} style={bookmarkStyle}>
-            <p>{text}</p>
+            <p>"{text}"</p>
         </div>
     )
 }
