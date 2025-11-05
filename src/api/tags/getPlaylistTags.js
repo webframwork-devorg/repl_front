@@ -4,7 +4,7 @@ export async function getPlaylistTags() {
   try {
     const { data, error } = await supabase
       .from("playlist_tags")
-      .select("tag_id, playlist_id");
+      .select('*');
 
     if (error) throw error;
 
