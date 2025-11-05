@@ -1,5 +1,6 @@
 import QuoteBox from "@/components/commons/textBox/QuoteBox";
 import FloatingMenu from "@/components/commons/floating/FloatingMenu";
+import ThumbnailCard from "@/components/commons/card/ThumbnailCard";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
 function ListPage() {
@@ -19,6 +20,9 @@ function ListPage() {
        className="max-w-[600px] mx-auto text-center" 
      />
       <FloatingMenu />
+      <ThumbnailCard 
+      title = {quoteText}
+      />
     </div>
     </>
   ); 
