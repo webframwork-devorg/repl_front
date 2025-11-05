@@ -1,39 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 /**
  * @param {object} props
  * @param {string} props.title - 책 제목
  * @param {string} props.author - 저자
  * @param {string} props.image - 책 표지 이미지 URL
+ * @param {number} props.rating - 별점
+ * @param {string} props.readDate - 읽은 날짜
+ * @param {string[]} props.tags - 태그 배열
  */
-function BookInfo({ title, author, image }) {
+function BookInfo({ title, author, image, rating, readDate, tags }) {
+
+  const [isFlipped, setIsFlipped] = useState(false);
   
   const displayTitle = title || "제목 없음";
   const displayAuthor = author || "작자 미상";
   const displayImage = image || "https://via.placeholder.com/128x180?text=No+Image";
+  const displayRating = rating ? `⭐ ${rating}` : "평가 없음";
+  const displayReadDate = readDate || "날짜 미지정";
+  const displayTags = tags && tags.length > 0 ? tags : ["태그 없음"];
+
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);
+  };
 
   return (
-    <div className="w-53 h-80 bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
-      
-      <div className="w-full ">
-        <img
-          src={displayImage}
-          alt={displayTitle}
-          className="w-full h-full object-cover" 
-        />
-      </div>
+    <div 
+      className="w-53 h-80 [perspective:1000px] cursor-pointer"
+      onClick={handleFlip}
+    >
+      <div 
+        className={`
+          relative w-full h-full [transform-style:preserve-3d] transition-transform duration-700
+          ${isFlipped ? '[transform:rotateY(180deg)]' : ''}
+        `}
+      >
+        <div className="absolute w-full h-full [backface-visibility:hidden]">
+          <img
+            src={displayImage}
+            alt={displayTitle}
+            className="w-full h-full object-cover rounded-lg shadow-md" 
+          />
+        </div>
+        
+        <div 
+          className="
+            absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]
+            bg-white rounded-lg shadow-md p-4 
+            flex flex-col justify-center items-center text-center
+            overflow-auto /* 텍스트가 많을 경우 스크롤 */
+          "
+        >
+          <h3 className="font-bold text-sm" title={displayTitle}>
+            {displayTitle}
+          </h3>
 
-      <div className="w-full h-12 p-1 flex flex-col justify-center">
-       
-        <h3 className="font-bold text-xs truncate" title={displayTitle}>
-          {displayTitle}
-        </h3>
-        <p className="text-gray-600 text-xs truncate" title={displayAuthor}>
-          {displayAuthor}
-        </p>
-      </div>
+          <p className="text-gray-600 text-xs mt-1" title={displayAuthor}>
+            {displayAuthor}
+          </p>
+          
+          <hr className="my-2 w-3/4" />
 
-   </div>
+
+          <p className="font-semibold text-yellow-500 text-xs">
+            {displayRating}
+          </p>
+
+          <p className="text-gray-500 text-xs mt-1">
+            {displayReadDate}
+          </p>
+
+
+          <div className="flex flex-wrap justify-center gap-1 mt-2">
+            {displayTags.map((tag) => (
+              <span 
+                key={tag} 
+                className="px-2 py-0.5 bg-gray-200 text-gray-700 rounded-full text-xs"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </div>
   );
 }
 
