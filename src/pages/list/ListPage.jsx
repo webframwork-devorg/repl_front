@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getPlaylistById } from '@/api/playlists/getPlaylistById';
 import { getTags } from "@/api/tags/getTags";
 import FloatingMenu from "@/components/commons/floating/FloatingMenu";
+import ThumbnailCard from "@/components/commons/card/ThumbnailCard";
 import QuoteBox from "@/components/commons/textBox/QuoteBox";
 import MainCard from '@/components/commons/card/MainCard';
 
@@ -75,6 +76,9 @@ function ListPage() {
         </div>
       )}
       <FloatingMenu />
+      <ThumbnailCard 
+      title = {quoteText}
+      />
     </div>
   );
 }
