@@ -1,16 +1,17 @@
 import { useState, useRef, useEffect } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaPencilAlt, FaTrash } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
-/**
- * @param {Array} menuItems - [{ icon: <FaPencilAlt />, label: "수정", path: "/edit" }]
- * @param {Array} menuItems - [{ icon: <FaTrash />, label: "삭제", path: "/delete" }]
- */
-function FloatingMenu({ menuItems = [] }) {
+function FloatingMenu() {
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
   
+  const menuItems = [
+    { icon: <FaPencilAlt />, label: "수정", path: "/edit" },
+    { icon: <FaTrash />, label: "삭제", path: "/delete" },
+  ];
+
   const showFloatingMenuHandler = () => {
     setOpenMenu((prev) => !prev);
   };
@@ -36,13 +37,15 @@ function FloatingMenu({ menuItems = [] }) {
   
   return (
     <div className="fixed bottom-10 right-10" ref={menuRef}>
-      {openMenu && (
-        <ul className="flex flex-col items-center mb-2.5 animate-fadeIn">
+      <ul
+        className={`flex flex-col items-center mb-2.5 transition-all duration-300 ease-in-out ${
+          openMenu ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}>
           {menuItems.map((item, index) => (
             <li key={index}>
               <button
                 type="button"
-                className="w-[50px] h-[50px] rounded-full bg-[#474749] text-white border border-black flex items-center justify-center shadow-md cursor-pointer mb-2.5 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-[#5f5c5c]"
+                className="w-[50px] h-[50px] rounded-full bg-[#474749] text-white border border-black flex items-center justify-center cursor-pointer mb-2.5 transition-all duration-300 ease-in-out hover:scale-110 hover:bg-[#5f5c5c]"
                 onClick={() => handleSubMenuClick(item.path)}
                 aria-label={item.label}
               >
@@ -50,11 +53,10 @@ function FloatingMenu({ menuItems = [] }) {
               </button>
             </li>
           ))}
-        </ul>
-      )}
+      </ul>
       <button
         type="button"
-        className={`w-[60px] h-[60px] rounded-full bg-[#474749] text-white border-none flex items-center justify-center shadow-[0_4px_8px_rgba(251,251,251,0.2)] cursor-pointer transition-transform duration-300 ease-in-out ${
+        className={`w-[60px] h-[60px] rounded-full bg-[#474749] text-white border-none flex items-center justify-center cursor-pointer transition-transform duration-300 ease-in-out ${
           openMenu ? "rotate-45" : ""
         }`}
         onClick={showFloatingMenuHandler}
