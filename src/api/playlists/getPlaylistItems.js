@@ -15,6 +15,15 @@ export async function getPlaylistItems(bookId) {
         user_comment,
         read_date,
 
+        playlist_id,
+        playlists (
+          p_title,
+          user_id,
+          users!user_id (
+            profile_nickname
+          )
+        ),
+
         playlistitem_tags (
           tag_id,
           tags ( tag_name )
@@ -43,6 +52,12 @@ export async function getPlaylistItems(bookId) {
       rating: item.user_rating,
       comment: item.user_comment,
       readDate: item.read_date,
+      playlistInfo: {
+        id: item.playlist_id,
+        title: item.playlists?.p_title || "제목 없음",
+        creatorId: item.playlists?.user_id || null,
+        creatorNickname: item.playlists?.users?.profile_nickname || null,
+      },
       tags:
         item.playlistitem_tags
           ?.map((t) => t.tags?.tag_name)
