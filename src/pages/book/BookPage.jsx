@@ -1,5 +1,5 @@
 import CommentBox from "@/components/commons/textBox/CommentBox";
-import BookMark from "@/components/commons/bookmarks/Bookmark";
+import My from "@/components/commons/bookmarks/1";
 import BookInfo from "@/components/commons/bookinfo/BookInfo"; 
 
 import { getBookDetails } from "@/api/books/getBookDetails";
@@ -162,7 +162,7 @@ function BookPage() {
        <div className="flex flex-col items-center"> 
          {passages.length > 0 ? (
           passages.map((passage) => (
-             <BookMark
+             <My
               key={passage.passage_id} 
               text={passage.passage_text}
               pageNumber={passage.page_number}
@@ -170,7 +170,7 @@ function BookPage() {
             />
            ))
         ) : (
-           <BookMark text="저장된 인용구가 없습니다." />
+           <My text="저장된 인용구가 없습니다." />
         )}
       </div>
         
