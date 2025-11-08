@@ -21,7 +21,7 @@ const bookmarkBackgrounds = {
  * @param {string} props.pageNumber - 페이지 번호
  * @param {number} props.backgroundId - 배경 ID (1, 2, 3...)
  */
-function My({ text, pageNumber, backgroundId }) { 
+function Bookmark({ text, pageNumber, backgroundId }) { 
 
     //기본값 1번(파란색)
     const selectedBg = bookmarkBackgrounds[backgroundId] || bookmarkBackgrounds[1];
@@ -46,4 +46,4 @@ function My({ text, pageNumber, backgroundId }) {
     )
 }
 
-export default My;
+export default Bookmark;
