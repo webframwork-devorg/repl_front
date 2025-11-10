@@ -1,6 +1,8 @@
 import { supabase } from "@/api/supabaseClient";
 
 export async function getPlaylistById(playlistId, sort = "latest", selectedTags = []) {
+  const { data: { user } } = await supabase.auth.getUser();
+
   try {
     const { data, error } = await supabase.from("playlists").select(`
       playlist_id,
@@ -42,8 +44,22 @@ export async function getPlaylistById(playlistId, sort = "latest", selectedTags 
       return null;
     }
 
-    console.log("🎧 Supabase 원본 데이터 (단일 객체):", data);
+    // 현재 유저가 이 글을 '좋아요' 했는지 확인
+    let isLikedByUser = false;
+    if (user) {
+      const { data: likeData, error: likeError } = await supabase
+        .from("user_playlist_likes") 
+        .select("playlist_id")
+        .eq("playlist_id", playlistId)
+        .eq("user_id", user.id); // 현재 유저 ID
+      
+      // 조회된 데이터(likeData)가 있고 길이가 0보다 크면 '좋아요' 누른 것
+      if (likeData && likeData.length > 0) {
+        isLikedByUser = true;
+      }
+    }
 
+    console.log("🎧 Supabase 원본 데이터 (단일 객체):", data);
 
     // 'data' 객체를 직접 'formatted' 객체로 변환합니다.
     const formatted = {
@@ -51,6 +67,7 @@ export async function getPlaylistById(playlistId, sort = "latest", selectedTags 
       username: data.users?.profile_nickname || "익명 사용자",
       userImage: data.users?.profile_image_url || null,
       title: data.p_title,
+      isLikedByUser: isLikedByUser,
       image: data.thumbnail_url,
       description: data.summary,
       likeCount: data.like_count,
@@ -80,5 +97,39 @@ export async function getPlaylistById(playlistId, sort = "latest", selectedTags 
   } catch (error) {
     console.error("전체 함수 실행 오류:", error);
     return null;
+  }
+}
+
+export async function togglePlaylistLike(playlistId, currentIsLiked) {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    alert("로그인이 필요합니다.");
+    throw new Error("로그인이 필요합니다.");
+  }
+
+  try {
+    if (currentIsLiked) {
+      const { error } = await supabase
+        .from("user_playlist_likes") 
+        .delete()
+        .match({ playlist_id: playlistId, user_id: user.id });
+      
+      if (error) throw error;
+
+    } else {
+      const { error } = await supabase
+        .from("user_playlist_likes") 
+        .insert({ playlist_id: playlistId, user_id: user.id });
+
+      if (error) throw error;
+    }
+
+    return { success: true };
+
+  } catch (error) {
+    console.error("좋아요 처리 실패:", error);
+    // 에러를 ListPage의 catch 블록으로 전달
+    throw error;
   }
 }
