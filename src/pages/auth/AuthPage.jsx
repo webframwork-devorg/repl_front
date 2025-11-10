@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/api/supabaseClient";
 import BasicButton from "@/components/commons/buttons/BasicButton";
 
 function AuthPage() {

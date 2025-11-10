@@ -4,16 +4,25 @@ import routes from "@/utils/constants/routes";
 
 import AuthPage from "@/pages/auth/AuthPage";
 import LandingPage from "@/pages/landing/LandingPage";
+import ListPage from "@/pages/list/ListPage";
 import ErrorPage from "@/pages/error/ErrorPage";
 import AuthCallback from "@/pages/auth/AuthCallback";
 
 import { useAuthStore } from "@/stores/useAuthStore";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/api/supabaseClient";
 
 function App() {
   const fetchSession = useAuthStore((s) => s.fetchSession);
   const setSession = useAuthStore((s) => s.setSession);
+  useEffect(() => {
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        console.log("[AuthStateChange]", event, session);
+      }
+    );
 
+    return () => listener.subscription.unsubscribe();
+  }, []);
   useEffect(() => {
     fetchSession();
     const {
@@ -32,6 +41,7 @@ function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path={routes.auth} element={<AuthPage />} />
+      <Route path={routes.list} element={<ListPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
