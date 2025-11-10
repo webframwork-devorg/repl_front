@@ -3,11 +3,16 @@ import FeedHeader from "@/components/commons/headers/FeedHeader";
 import TagDropdown from "@/components/commons/dropdowns/TagDropdown";
 import SortDropdown from "@/components/commons/dropdowns/SortDropdown";
 import CardList from "@/components/commons/cardList/CardList";
+import FloatingMenu from "@/components/commons/floating/FloatingMenu";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
 import { getPlaylists } from "@/api/playlists/getPlaylists";
 import { getTags } from "@/api/tags/getTags";
+import { useNavigate } from "react-router-dom";
 
 function LandingPage() {
+  const navigate = useNavigate();
+
   const [playlists, setPlaylists] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -24,7 +29,7 @@ useEffect(() => {
   async function fetchPlaylists() {
     setLoading(true);
     try {
-      const data = await getPlaylists(sort, selectedTags); // ✅ 태그도 전달
+      const data = await getPlaylists(sort, selectedTags);
       setPlaylists(data);
       console.log("플레이리스트 데이터:", data);
     } catch (err) {
@@ -53,6 +58,11 @@ useEffect(() => {
 
     fetchTags();
   }, [sort, selectedTags]);
+   const menuItems = [
+      { icon: <FaPencilAlt />, label: "수정", path: "/edit/list" },
+      { icon: <FaTrash />, label: "삭제", path: "/delete" },
+    ];
+  
 
   return (
     <div className="pb-[15px] bg-black min-h-screen">
@@ -60,10 +70,7 @@ useEffect(() => {
         <div className="flex flex-col gap-[10px] sticky top-0 z-50 px-[15px] pt-[20px] pb-[20px] bg-black">
           <FeedHeader />
           <div className="flex justify-between">
-            <TagDropdown
-              tags={tags}
-              onChange={setSelectedTags}
-            />
+            <TagDropdown tags={tags} onChange={setSelectedTags} />
             <SortDropdown
               options={sortOptions}
               initialValue="latest"
@@ -77,23 +84,25 @@ useEffect(() => {
             로딩 중...
           </div>
         ) : (
-          <div className="flex flex-col gap-3 px-[15px]">
+          <div className="flex flex-col gap-5 px-[15px]">
             {playlists.map((item, idx) => (
               <CardList
                 key={idx}
                 username={item.username}
-                count={1}
+                count={item.subCards.length + 1}
                 mainCard={{
                   image: item.image,
                   title: item.title,
                   tags: item.tags,
                 }}
-                subCards={[]}
+                subCards={item.subCards}
+                onClick={() => navigate(`/list/${item.id}`)}
               />
             ))}
           </div>
         )}
       </div>
+      <FloatingMenu menuItems={menuItems} />
     </div>
   );
 }
