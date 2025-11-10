@@ -80,7 +80,7 @@ function ListPage() {
           </div>
 
           {/* 태그 표시 */}
-          <p className="text-gray-300">
+          <p className="font-bold text-[#828282]">
             {Array.isArray(playlistItem.tags) 
               ? playlistItem.tags.map(tag => `#${tag.name}`).join(' ') 
               : ''}
@@ -90,15 +90,15 @@ function ListPage() {
           <QuoteBox text={playlistItem.description} />
           
           {/* ✅ SortDropdown을 QuoteBox 바로 아래 왼쪽에 배치 */}
-          <div className="flex justify-start items-center mt-2 gap-4">
+          <div className="flex justify-end items-center mt-2 gap-4">
             <SortDropdown
               options={sortOptions}
               initialValue={sort}
               onChange={setSort}
             />
             {/* 책 개수 표시 */}
-            <span className="text-sm text-gray-400">
-              {playlistItem.items?.length || 0}권의 책
+            <span className="text-sm font-bold text-[15px] text-[#828282]">
+              책: {playlistItem.items?.length || 0}개
             </span>
           </div>
           
