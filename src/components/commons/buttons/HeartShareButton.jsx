@@ -14,7 +14,7 @@ import ShareButtonIcon from "@/assets/images/share.svg";
  */
 function HeartShareButton({ isLiked, onHeartClick, onShareClick }) {
   return (
-    <div className="flex items-center gap-1"> {/* 버튼들을 감싸는 div */}
+    <div className="flex items-center gap-3"> {/* 버튼들을 감싸는 div */}
       {/*
         1. 하트 버튼
         - isLiked 상태를 부모로부터 받아 HeartButton에 전달
@@ -26,7 +26,7 @@ function HeartShareButton({ isLiked, onHeartClick, onShareClick }) {
         2. 공유 버튼
         - onShareClick 함수를 부모로부터 받아 이 button의 onClick에 연결
       */}
-      <button onClick={onShareClick} className="p-2">
+      <button onClick={onShareClick} className="">
         <img src={ShareButtonIcon} className="w-5 h-5"/>
       </button>
     </div>
