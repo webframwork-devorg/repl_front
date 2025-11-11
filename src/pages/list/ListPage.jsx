@@ -130,7 +130,7 @@ function ListPage() {
               title={playlistItem.title} 
             />
           </div>
-          <div className="px-[15px] py-[5px] flex flex-col gap-2">  
+          <div className="px-[15px] py-[5px] flex flex-col gap-3">  
           {/* 태그 표시 */}
           <p className="font-bold text-[15px] px-1 text-[#828282]">
             {Array.isArray(playlistItem.tags) 
@@ -164,7 +164,7 @@ function ListPage() {
           
           {/* 플레이리스트에 포함된 책 목록 */}
           {sortedItems.length > 0 ? (
-            <div className="grid grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-3 gap-4">
               {sortedItems.map(item => (
                 <div key={item.id} className="text-white">
                   {item.book && (
