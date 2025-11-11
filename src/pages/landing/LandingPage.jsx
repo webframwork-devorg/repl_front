@@ -5,7 +5,7 @@ import TagDropdown from "@/components/commons/dropdowns/TagDropdown";
 import SortDropdown from "@/components/commons/dropdowns/SortDropdown";
 import CardList from "@/components/commons/cardList/CardList";
 import FloatingMenu from "@/components/commons/floating/FloatingMenu";
-import { FaPencilAlt, FaTrash } from "react-icons/fa";
+import { sortOptions } from "@/utils/constants/sortOptions";
 
 import { getPlaylists } from "@/api/playlists/getPlaylists";
 import { getTags } from "@/api/tags/getTags";
@@ -20,12 +20,6 @@ function LandingPage() {
     tags: [],
     loading: false,
   });
-
-  const sortOptions = [
-    { value: "latest", label: "최신순" },
-    { value: "likes", label: "인기순" },
-    { value: "title", label: "제목순" },
-  ];
 
   useEffect(() => {
     async function fetchData() {
