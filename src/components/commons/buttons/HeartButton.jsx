@@ -16,7 +16,7 @@ function HeartButton({ isLiked, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="p-2" // (스타일은 예시입니다)
+      className="" // (스타일은 예시입니다)
     >
       <img src={heartIcon} className="w-5 h-5" />
     </button>

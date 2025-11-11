@@ -138,7 +138,7 @@ function ListPage() {
           <QuoteBox class
             text={playlistItem.description} />
 
-          <div className="flex justify-between items-center mt-2">
+          <div className="flex justify-between items-center px-1 mt-2">
             <HeartShareButton
               isLiked={isLiked}
               onHeartClick={handleLikeToggle} // 하트 로직 연결
