@@ -122,7 +122,7 @@ function ListPage() {
           Loading...
         </div>
       ) : playlistItem ? (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           {/* 썸네일 카드 */}
           <div>
             <ThumbnailCard 
@@ -130,9 +130,9 @@ function ListPage() {
               title={playlistItem.title} 
             />
           </div>
-          <div className="px-[15px] py-[20px]">  
+          <div className="px-[15px] py-[5px] flex flex-col gap-2">  
           {/* 태그 표시 */}
-          <p className="font-bold text-[13px] text-[#828282]">
+          <p className="font-bold text-[15px] px-1 text-[#828282]">
             {Array.isArray(playlistItem.tags) 
               ? playlistItem.tags.map(tag => `#${tag.name}`).join(' ') 
               : ''}
@@ -142,7 +142,7 @@ function ListPage() {
           <QuoteBox class
             text={playlistItem.description} />
 
-          <div className="flex justify-between items-center px-1 mt-2">
+          <div className="flex justify-between items-center px-1">
             <HeartShareButton
               isLiked={isLiked}
               onHeartClick={handleLikeToggle} // 하트 로직 연결
