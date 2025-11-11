@@ -7,6 +7,7 @@ import { getPlaylistItems } from "@/api/playlists/getPlaylistItems";
 import heartIcon from "@/assets/images/heart.svg";
 import emptyHeartIcon from "@/assets/images/emptyHeart.svg"; 
 import plusIcon from "@/assets/images/plus.svg";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -92,11 +93,12 @@ function BookPage() {
 
   return (
     <div className="min-h-screen bg-[#000000]">
+      
       <button
         onClick={handleGoBack}
         className="px-4 py-2 text-[20px] font-semibold text-white transition-opacity hover:opacity-75"
       >
-        ←
+        <IoMdArrowRoundBack /> 
       </button>
 
       {/* BookInfo */}
