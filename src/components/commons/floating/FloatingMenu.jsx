@@ -8,7 +8,7 @@ function FloatingMenu() {
   const navigate = useNavigate();
   
   const menuItems = [
-    { icon: <FaPencilAlt />, label: "수정", path: "/edit" },
+    { icon: <FaPencilAlt />, label: "수정", path: "/edit/list" },
     { icon: <FaTrash />, label: "삭제", path: "/delete" },
   ];
 

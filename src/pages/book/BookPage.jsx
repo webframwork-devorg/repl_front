@@ -1,7 +1,6 @@
 import CommentBox from "@/components/commons/textBox/CommentBox";
-import BookMark from "@/components/commons/bookmarks/Bookmark";
-import BookInfo from "@/components/commons/bookinfo/BookInfo"; 
-
+import Bookmark from "@/components/commons/bookmarks/Bookmark";
+import BookInfo from "@/components/commons/bookInfo/BookInfo";
 import { getBookDetails } from "@/api/books/getBookDetails";
 import { getPlaylistItems } from "@/api/playlists/getPlaylistItems";
 
@@ -94,7 +93,6 @@ function BookPage() {
 
   return (
     <div className="min-h-screen bg-[#000000]">
-      
       <button
         onClick={handleGoBack}
         className="px-4 py-2 text-[20px] font-semibold text-white transition-opacity hover:opacity-75"
@@ -104,76 +102,79 @@ function BookPage() {
 
       {/* BookInfo */}
       <div className="w-full flex justify-center ">
-        {loading && <div className="w-32 h-32 flex items-center justify-center">로딩...</div>}
-         
-         {!loading && book && (
-            <div className="flex flex-col items-center">
-              <h2 className="mb-2 text-[14px] font-bold text-white">{book.title}</h2>
+        {loading && (
+          <div className="w-32 h-32 flex items-center justify-center">
+            로딩...
+          </div>
+        )}
 
-             {displayUserName && (
-                <p className="mb-2 text-[11px] font-semibold text-[#828282]">
-                  @{displayUserName}
-                 </p>
-             )}
-              <BookInfo
-                 title={book.title}
-                 author={book.author}
-                 image={book.image}
-                rating={rating}
-                 readDate={readDate}
-                 tags={bookTags}
-              />
-            </div>
+        {!loading && book && (
+          <div className="flex flex-col items-center">
+            <h2 className="mb-2 text-[14px] font-bold text-white">
+              {book.title}
+            </h2>
+
+            {displayUserName && (
+              <p className="mb-2 text-[11px] font-semibold text-[#828282]">
+                @{displayUserName}
+              </p>
+            )}
+            <BookInfo
+              title={book.title}
+              author={book.author}
+              image={book.image}
+              rating={rating}
+              readDate={readDate}
+              tags={bookTags}
+            />
+          </div>
         )}
       </div>
 
       {/* CommentBox */}
       <div className="w-full flex justify-center my-4">
-         <CommentBox text={commentText || "코멘트가 아직 없습니다."} />
+        <CommentBox text={commentText || "코멘트가 아직 없습니다."} />
       </div>
-
 
       {/* 북마크 */}
       <div className="w-full h-5 flex justify-center">
-         <div className="w-95 flex justify-between items-center px-4 py-2">
+        <div className="w-95 flex justify-between items-center px-4 py-2">
           <p className="font-semibold text-[#828282] text-sm">
             책갈피: {passages.length}개
           </p>
-          
+
           <div className="flex space-x-2">
-            <button 
+            <button
               className="p-1 transition-transform hover:scale-110"
               onClick={toggleLike}
             >
-              <img 
-                src={isLiked ? heartIcon : emptyHeartIcon} 
-                alt="좋아요" 
-                className="w-5 h-5" 
+              <img
+                src={isLiked ? heartIcon : emptyHeartIcon}
+                alt="좋아요"
+                className="w-5 h-5"
               />
             </button>
             <button className="p-1 transition-transform hover:scale-110">
               <img src={plusIcon} alt="책갈피 추가" className="w-5 h-5" />
-              </button>
+            </button>
           </div>
-         </div>
-       </div>
+        </div>
+      </div>
 
-
-       <div className="flex flex-col items-center"> 
-         {passages.length > 0 ? (
+      <div className="flex flex-col items-center">
+        {passages.length > 0 ? (
           passages.map((passage) => (
-             <BookMark
-              key={passage.passage_id} 
+            <Bookmark
+              key={passage.passage_id}
               text={passage.passage_text}
               pageNumber={passage.page_number}
               backgroundId={passage.background_id}
             />
-           ))
+          ))
         ) : (
-           <BookMark text="저장된 인용구가 없습니다." />
+          <Bookmark text="저장된 인용구가 없습니다." />
         )}
       </div>
-        
     </div>
   );
 }
