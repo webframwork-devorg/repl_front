@@ -88,7 +88,6 @@ function BookPage() {
   const handleGoBack = () => {
     // ListPage로 이동
     navigate(`/list/${id}`);
-
   };
 
   return (
