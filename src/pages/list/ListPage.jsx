@@ -120,7 +120,6 @@ function ListPage() {
   };
 
   return (
-    <div>
     <div className={baseStyle}>
       {loading ? (
         <div className="flex justify-center items-center text-gray-400 text-sm py-10">
@@ -133,7 +132,6 @@ function ListPage() {
           className="absolute px-4 py-2 z-20 text-[20px] font-semibold text-white transition-opacity hover:opacity-75">
             ←
           </button>
-        <div className="flex flex-col gap-2">
           {/* 썸네일 카드 */}
             <ThumbnailCard 
               image={playlistItem.image} 
@@ -201,9 +199,8 @@ function ListPage() {
         </div>
       )}
       <FloatingMenu />
+      <FloatingMenu />
     </div>
-  </div>
   ); 
 }
-
 export default ListPage;
