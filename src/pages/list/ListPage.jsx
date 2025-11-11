@@ -114,6 +114,11 @@ function ListPage() {
     }
   };
 
+  const handleGoBack = () => {
+    // ListPage로 이동
+    navigate(`/`);
+  };
+
   return (
     <div>
     <div className={baseStyle}>
@@ -123,13 +128,17 @@ function ListPage() {
         </div>
       ) : playlistItem ? (
         <div className="flex flex-col gap-3">
+          <div className = "relative">
+          <button onClick={handleGoBack}
+          className="absolute px-4 py-2 z-20 text-[20px] font-semibold text-white transition-opacity hover:opacity-75">
+            ←
+          </button>
           {/* 썸네일 카드 */}
-          <div>
             <ThumbnailCard 
               image={playlistItem.image} 
               title={playlistItem.title} 
             />
-          </div>
+        </div>
           <div className="px-[15px] py-[20px]">  
           {/* 태그 표시 */}
           <p className="font-bold text-[13px] text-[#828282]">
