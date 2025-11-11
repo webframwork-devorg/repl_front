@@ -49,11 +49,6 @@ function LandingPage() {
     fetchData();
   }, [sort, selectedTags]);
 
-  const menuItems = [
-    { icon: <FaPencilAlt />, label: "수정", path: "/edit/list" },
-    { icon: <FaTrash />, label: "삭제", path: "/delete" },
-  ];
-
   return (
     <div className="pb-[15px] bg-black min-h-screen">
       <div>
@@ -92,7 +87,7 @@ function LandingPage() {
           </div>
         )}
       </div>
-      <FloatingMenu menuItems={menuItems} />
+      <FloatingMenu />
     </div>
   );
 }
