@@ -114,17 +114,25 @@ function ListPage() {
     }
   };
 
+  const handleGoBack = () => {
+    // ListPage로 이동
+    navigate(`/`);
+  };
+
   return (
-    <div>
     <div className={baseStyle}>
       {loading ? (
         <div className="flex justify-center items-center text-gray-400 text-sm py-10">
           Loading...
         </div>
       ) : playlistItem ? (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
+          <div className = "relative">
+          <button onClick={handleGoBack}
+          className="absolute px-4 py-2 z-20 text-[20px] font-semibold text-white transition-opacity hover:opacity-75">
+            ←
+          </button>
           {/* 썸네일 카드 */}
-          <div>
             <ThumbnailCard 
               image={playlistItem.image} 
               title={playlistItem.title} 
@@ -191,9 +199,8 @@ function ListPage() {
         </div>
       )}
       <FloatingMenu />
+      <FloatingMenu />
     </div>
-  </div>
   ); 
 }
-
 export default ListPage;
