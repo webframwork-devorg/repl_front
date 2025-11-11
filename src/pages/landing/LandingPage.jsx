@@ -6,7 +6,7 @@ import SortDropdown from "@/components/commons/dropdowns/SortDropdown";
 import CardList from "@/components/commons/cardList/CardList";
 import FloatingMenu from "@/components/commons/floating/FloatingMenu";
 import { sortOptions } from "@/utils/constants/sortOptions";
-
+import routes from "@/utils/constants/routes";
 import { getPlaylists } from "@/api/playlists/getPlaylists";
 import { getTags } from "@/api/tags/getTags";
 
@@ -75,7 +75,7 @@ function LandingPage() {
                   tags: item.tags,
                 }}
                 subCards={item.subCards}
-                onClick={() => navigate(`/list/${item.id}`)}
+                onClick={() => navigate(routes.list.replace(":id", item.id))}
               />
             ))}
           </div>
