@@ -45,7 +45,7 @@ function App() {
     <Routes>
       <Route path={routes.auth} element={<AuthPage />} />
       <Route path={routes.list} element={<ListPage />} />
-      <Route path="/book/:id" element={<BookPage />} />
+      <Route path={routes.book} element={<BookPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
 
       <Route
