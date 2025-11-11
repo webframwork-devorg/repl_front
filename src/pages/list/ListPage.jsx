@@ -23,7 +23,33 @@ function ListPage() {
     { value: "likes", label: "인기순" },
     { value: "title", label: "제목순" },
   ];
+
+  const sortedItems = useMemo(() => {
+    // 플레이리스트 아이템이 없으면 빈 배열 반환
+  if (!playlistItem || !playlistItem.items) {
+   return [];
+  }
   
+  const itemsToSort = [...playlistItem.items];
+
+  if (sort === "latest") {
+      // API에서 받아온 createdAt(아이템 추가일)  기준으로 내림차순 정렬
+      itemsToSort.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else if (sort === "likes") {
+      // API에서 받아온 likeCount(아이템 좋아요 수)  기준으로 내림차순 정렬
+      itemsToSort.sort((a, b) => (b.likeCount || 0) - (a.likeCount || 0));
+    } else if (sort === "title") {
+      // 책 제목(b_title) [cite: 14] 기준으로 오름차순(가나다순) 정렬
+      itemsToSort.sort((a, b) => {
+        const titleA = a.book?.title || "";
+        const titleB = b.book?.title || "";
+        return titleA.localeCompare(titleB);
+      });
+    }
+    // 정렬된 배열 반환
+  return itemsToSort;
+ }, [playlistItem, sort]);
+
   useEffect(() => {
     async function fetchPlaylist() {
       setLoading(true); 
@@ -49,29 +75,7 @@ function ListPage() {
     }
   }, [id, location.state?.key]);
 
-  const sortedItems = useMemo(() => {
-    if (!playlistItem || !playlistItem.items) {
-      return [];
-    }
-
-    const itemsToSort = [...playlistItem.items];
-
-    switch (sort) {
-      case 'latest':
-        // playlist_items에 아이템이 추가된 최신순으로 정렬
-        return itemsToSort.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      case 'likes':
-        // 책의 좋아요(인기) 순으로 정렬
-        return itemsToSort.sort((a, b) => b.book.likes - a.book.likes);
-      case 'title':
-        // 책 제목의 가나다순으로 정렬
-        return itemsToSort.sort((a, b) => a.book.title.localeCompare(b.book.title));
-      default:
-        return itemsToSort;
-    }
-  }, [playlistItem, sort]);
-
-  const baseStyle = "bg-black min-h-screen pb-[15px]";
+  const baseStyle = "bg-black min-h-screen";
 
   const handleLikeToggle = async () => {
     if (isLikeLoading) return;
@@ -111,14 +115,14 @@ function ListPage() {
   };
 
   return (
-    <>
+    <div>
     <div className={baseStyle}>
       {loading ? (
         <div className="flex justify-center items-center text-gray-400 text-sm py-10">
           Loading...
         </div>
       ) : playlistItem ? (
-        <div className="flex flex-col gap-3 px-[15px] pt-[20px]">
+        <div className="flex flex-col gap-3">
           {/* 썸네일 카드 */}
           <div>
             <ThumbnailCard 
@@ -126,9 +130,9 @@ function ListPage() {
               title={playlistItem.title} 
             />
           </div>
-
+          <div className="px-[15px] py-[20px]">  
           {/* 태그 표시 */}
-          <p className="font-bold text-[#828282]">
+          <p className="font-bold text-[13px] text-[#828282]">
             {Array.isArray(playlistItem.tags) 
               ? playlistItem.tags.map(tag => `#${tag.name}`).join(' ') 
               : ''}
@@ -146,6 +150,7 @@ function ListPage() {
             />
             <div className="flex items-center gap-4">
               <SortDropdown
+                key={sort}
                 options={sortOptions}
                 initialValue={sort}
                 onChange={setSort}
@@ -167,7 +172,7 @@ function ListPage() {
                       src={item.book.cover} 
                       className="w-full h-auto object-cover cursor-pointer rounded hover:opacity-80 transition-opacity" 
                       alt={item.book.title} 
-                      onClick={() => navigate(`/list/${id}/book/${item.bookId}`)}
+                      onClick={() => navigate(`/list/${item.id}/book/${item.bookId}`)}
                     />
                   )}
                 </div>
@@ -178,6 +183,7 @@ function ListPage() {
               No items in this playlist.
             </div>
           )}
+          </div>
         </div>
       ) : (
         <div className="flex justify-center items-center text-gray-400 text-sm py-10">
@@ -186,7 +192,7 @@ function ListPage() {
       )}
       <FloatingMenu />
     </div>
-    </>
+  </div>
   ); 
 }
 
