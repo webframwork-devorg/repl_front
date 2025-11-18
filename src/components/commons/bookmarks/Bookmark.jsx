@@ -1,7 +1,7 @@
 import React from "react";
 
 import blueBg from "@/assets/images/bookmark-blue.svg";
-import noteBg from "@/assets/images/bookmark-note.svg";
+import greenBg from "@/assets/images/bookmark-green.svg";
 import pinkBg from "@/assets/images/bookmark-pink.svg";
 import OrangeBg from "@/assets/images/bookmark-orange.svg";
 import whiteBg from "@/assets/images/bookmark-white.svg";
@@ -12,7 +12,7 @@ const bookmarkBackgrounds = {
   4: blueBg,    // ID 4번: 파란색
   2: pinkBg,     // ID 2번: 분홍색
   3: OrangeBg,  // ID 3번: 주황색
-  5: noteBg,    // ID 5번: 노트배경
+  5: greenBg,    // ID 5번: 초록색
 };
 
 /**
@@ -23,7 +23,7 @@ const bookmarkBackgrounds = {
  */
 function Bookmark({ text, pageNumber, backgroundId }) { 
 
-    //기본값 1번(파란색)
+    //기본값 1번(흰색)
     const selectedBg = bookmarkBackgrounds[backgroundId] || bookmarkBackgrounds[1];
 
     const bookmarkStyle= {

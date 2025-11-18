@@ -7,6 +7,7 @@ import LandingPage from "@/pages/landing/LandingPage";
 import ListPage from "@/pages/list/ListPage";
 import ErrorPage from "@/pages/error/ErrorPage";
 import BookPage from "@/pages/book/BookPage";
+import PlaylistBookAddPage from "@/pages/edit/PlaylistBookAddPage"; 
 import AuthCallback from "@/pages/auth/AuthCallback";
 import EditPage from "@/pages/edit/EditPage";
 import EditListPage from "@/pages/edit/list/EditListPage";
@@ -45,8 +46,6 @@ function App() {
   return (
     <Routes>
       <Route path={routes.auth} element={<AuthPage />} />
-      <Route path={routes.list} element={<ListPage />} />
-      <Route path={routes.book} element={<BookPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
 
       <Route
@@ -90,10 +89,10 @@ function App() {
         }
       />
       <Route
-        path="*"
+        path={routes.bookAdd}
         element={
           <ProtectedRoute>
-            <ErrorPage />
+            <PlaylistBookAddPage />
           </ProtectedRoute>
         }
       />

@@ -160,7 +160,7 @@ function ListPage() {
           </div>
           
           {sortedItems.length > 0 ? (
-            <div className="grid grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-3 gap-4">
               {sortedItems.map(item => (
                 <div key={item.id} className="text-white">
                   {item.book && (
@@ -168,7 +168,7 @@ function ListPage() {
                       src={item.book.cover} 
                       className="w-full h-auto object-cover cursor-pointer rounded hover:opacity-80 transition-opacity" 
                       alt={item.book.title} 
-                      onClick={() => navigate(`/list/${item.id}/book/${item.bookId}`)}
+                      onClick={() => navigate(`/list/${id}/book/${item.bookId}`)}
                     />
                   )}
                 </div>

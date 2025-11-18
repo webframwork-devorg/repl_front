@@ -4,90 +4,109 @@ import BookInfo from "@/components/commons/bookInfo/BookInfo";
 import { getBookDetails } from "@/api/books/getBookDetails";
 import { getPlaylistItems } from "@/api/playlists/getPlaylistItems";
 
-import heartIcon from "@/assets/images/heart.svg";
-import emptyHeartIcon from "@/assets/images/emptyHeart.svg"; 
-import plusIcon from "@/assets/images/plus.svg";
+import HeartPlusButton from "@/components/commons/buttons/HeartPlusButton";
+import AddBookmarkModal from "@/components/commons/modals/AddBookmarkModal";
 
-import React, { useEffect, useState } from "react";
+import { IoMdArrowRoundBack } from "react-icons/io";
+
+// 1. useCallback import 추가
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
+const initialReviewState = {
+  comment: "",
+  passages: [],
+  rating: null,
+  readDate: null,
+  tags: [],
+  userName: "작성자 정보 없음",
+  playlistId: null,
+  playlistItemId: null,
+};
 
 function BookPage() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { bookId } = useParams();
 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [commentText, setCommentText] = useState(""); 
-  const [passages, setPassages] = useState([]); 
-  const [rating, setRating] = useState(null);
-  const [readDate, setReadDate] = useState(null);
-  const [bookTags, setBookTags] = useState([]);
-  const [displayUserName, setDisplayUserName] = useState(null);
-  const [isLiked, setIsLiked] = useState(false); 
+  const [isLiked, setIsLiked] = useState(false);
+  const [review, setReview] = useState(initialReviewState);
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const loadBookData = useCallback(async () => {
+    if (!bookId) return; 
+    
+    try {
+      setLoading(true);
+      const [bookData, playlistData] = await Promise.all([
+        getBookDetails(bookId),
+        getPlaylistItems(bookId),
+      ]);
+
+      const bookInfo = bookData?.bookInfo ?? {};
+      const reviews = playlistData?.reviews ?? [];
+
+      setBook(
+        bookInfo.b_title
+          ? {
+              title: bookInfo.b_title,
+              author: bookInfo.author,
+              image: bookInfo.cover_image_url,
+            }
+          : null
+      );
+
+      const firstReviewItem = reviews && reviews[0];
+
+      if (firstReviewItem) {
+        const nickname = firstReviewItem.playlistInfo?.creatorNickname;
+        const userId = firstReviewItem.playlistInfo?.creatorId;
+
+        setReview({
+          comment: firstReviewItem.comment || "",
+          passages: firstReviewItem.passages || [],
+          rating: firstReviewItem.rating ?? null,
+          readDate: firstReviewItem.readDate ?? null,
+          tags: firstReviewItem.tags || [],
+          userName: nickname || userId || "작성자 정보 없음",
+          playlistId: firstReviewItem.playlistInfo?.id || null, 
+          playlistItemId: firstReviewItem.itemId || null,
+        });
+      } else {
+        setReview(initialReviewState);
+      }
+    } catch (error) {
+      console.error("Failed to load book:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [bookId]); // id가 변경될 때만 함수 새로 생성
 
   useEffect(() => {
-    const loadBookData = async () => {
-    try {
-        setLoading(true);
-        const [{ bookInfo }, { reviews }] = await Promise.all([
-          getBookDetails(id),
-          getPlaylistItems(id),
-        ]);
+    loadBookData();
+  }, [loadBookData]); 
 
-        setBook(
-          bookInfo
-             ? {
-                 title: bookInfo.b_title,
-                 author: bookInfo.author,
-                image: bookInfo.cover_image_url,
-               }
-            : null
-        );
-         
-        const firstReviewItem = reviews && reviews[0]; 
-
-        if (firstReviewItem) {
-           
-          setCommentText(firstReviewItem.comment || "");
-          setPassages(firstReviewItem.passages || []); 
-          setRating(firstReviewItem.rating ?? null);
-          setReadDate(firstReviewItem.readDate ?? null);
-          setBookTags(firstReviewItem.tags || []);
-
-          const nickname = firstReviewItem.playlistInfo?.creatorNickname;
-          const userId = firstReviewItem.playlistInfo?.creatorId;
-           
-          setDisplayUserName(nickname || userId || "작성자 정보 없음");
-        
-        } else {
-           // 리뷰가 없을 때 처리 
-          setDisplayUserName("작성자 정보 없음");
-          setCommentText("");
-          setPassages([]);
-          setRating(null);
-          setReadDate(null);
-          setBookTags([]);
-        }
-
-      } catch (error) {
-      console.error("Failed to load book:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    if (id) {
-      loadBookData();
-    }
-  }, [id]);
-
-  const toggleLike = () => {
+  const handleLikeToggle = () => {
     setIsLiked(!isLiked);
+  };
+  
+  const handlePlusClick = () => {
+    setIsModalOpen(true);
+  };
+  
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    loadBookData(); 
   };
 
   const handleGoBack = () => {
-    // ListPage로 이동
-    navigate(`/list/${id}`);
+    if (review.playlistId) {
+      navigate(`/list/${review.playlistId}`);
+    } else {
+      navigate(-1);
+    }
   };
 
   return (
@@ -96,7 +115,7 @@ function BookPage() {
         onClick={handleGoBack}
         className="px-4 py-2 text-[20px] font-semibold text-white transition-opacity hover:opacity-75"
       >
-        ←
+        <IoMdArrowRoundBack />
       </button>
 
       {/* BookInfo */}
@@ -106,25 +125,23 @@ function BookPage() {
             로딩...
           </div>
         )}
-
         {!loading && book && (
           <div className="flex flex-col items-center">
             <h2 className="mb-2 text-[14px] font-bold text-white">
               {book.title}
             </h2>
-
-            {displayUserName && (
+            {review.userName && (
               <p className="mb-2 text-[11px] font-semibold text-[#828282]">
-                @{displayUserName}
+                @{review.userName}
               </p>
             )}
             <BookInfo
               title={book.title}
               author={book.author}
               image={book.image}
-              rating={rating}
-              readDate={readDate}
-              tags={bookTags}
+              rating={review.rating}
+              readDate={review.readDate}
+              tags={review.tags}
             />
           </div>
         )}
@@ -132,39 +149,29 @@ function BookPage() {
 
       {/* CommentBox */}
       <div className="w-full flex justify-center my-4">
-        <CommentBox text={commentText || "코멘트가 아직 없습니다."} />
+        <CommentBox text={review.comment || "코멘트가 아직 없습니다."} />
       </div>
 
-      {/* 북마크 */}
+      {/* 북마크 영역 */}
       <div className="w-full h-5 flex justify-center">
         <div className="w-95 flex justify-between items-center px-4 py-2">
           <p className="font-semibold text-[#828282] text-sm">
-            책갈피: {passages.length}개
+            책갈피: {review.passages.length}개
           </p>
-
-          <div className="flex space-x-2">
-            <button
-              className="p-1 transition-transform hover:scale-110"
-              onClick={toggleLike}
-            >
-              <img
-                src={isLiked ? heartIcon : emptyHeartIcon}
-                alt="좋아요"
-                className="w-5 h-5"
-              />
-            </button>
-            <button className="p-1 transition-transform hover:scale-110">
-              <img src={plusIcon} alt="책갈피 추가" className="w-5 h-5" />
-            </button>
-          </div>
+          <HeartPlusButton
+            isLiked={isLiked}
+            onHeartClick={handleLikeToggle}
+            onPlusClick={handlePlusClick} 
+          />
         </div>
       </div>
 
+      {/* Bookmark 목록 */}
       <div className="flex flex-col items-center">
-        {passages.length > 0 ? (
-          passages.map((passage) => (
+        {review.passages.length > 0 ? (
+          review.passages.map((passage, index) => (
             <Bookmark
-              key={passage.passage_id}
+              key={passage.passage_id ?? index}
               text={passage.passage_text}
               pageNumber={passage.page_number}
               backgroundId={passage.background_id}
@@ -174,6 +181,15 @@ function BookPage() {
           <Bookmark text="저장된 인용구가 없습니다." />
         )}
       </div>
+      
+      {/* 모달 */}
+      {isModalOpen && (
+        <AddBookmarkModal
+          playlistItemId={review.playlistItemId}
+          onClose={handleCloseModal}
+        />
+      )}
+      
     </div>
   );
 }

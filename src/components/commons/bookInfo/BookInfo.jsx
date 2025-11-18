@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import defaultBookImage from "@/assets/images/no-image.svg";
+//책 정보 연결
 
 /**
  * @param {object} props
@@ -15,7 +17,7 @@ function BookInfo({ title, author, image, rating, readDate, tags }) {
   
   const displayTitle = title || "제목 없음";
   const displayAuthor = author || "작자 미상";
-  const displayImage = image || "https://via.placeholder.com/128x180?text=No+Image";
+  const displayImage = image || defaultBookImage;  
   const displayRating = rating ? `⭐ ${rating}` : "평가 없음";
   const displayReadDate = readDate || "날짜 미지정";
   const displayTags = tags && tags.length > 0 ? tags : ["태그 없음"];

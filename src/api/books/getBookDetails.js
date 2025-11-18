@@ -22,7 +22,6 @@ export async function getBookDetails(bookId) {
 
     if (error) {
       if (error.code === 'PGRST116') { 
-        console.log("해당 book_id의 책을 찾을 수 없습니다.");
         return { bookInfo: null };
       }
       throw error;
