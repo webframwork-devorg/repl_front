@@ -1,41 +1,51 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TextInput from "@/components/commons/inputs/TextInput";
 import TextArea from "@/components/commons/inputs/TextArea";
 import FileInput from "@/components/commons/inputs/FileInput";
 import TagDropdown from "@/components/commons/dropdowns/TagDropdown";
 import { getTags } from "@/api/tags/getTags";
-import { postPlayList } from "@/api/playlist/postPlaylist";
+import { postPlaylistItem } from "@/api/books/postBook";
 import { supabase } from "@/api/supabaseClient";
-import { useNavigate } from "react-router-dom";
+import SelectPlaylist from "@/components/commons/dropdowns/SelectPlaylist";
+import { getMyPlaylists } from "@/api/playlists/getMyPlaylists";
 
-function EditListPage() {
+function AddBookPage() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
+    author: "", 
     content: "",
     image: null,
     tags: [],
+    playlistId: "", // 선택된 플레이리스트 ID를 저장할 상태
   });
 
   const [tags, setTags] = useState([]);
+  const [playlists, setPlaylists] = useState([]); // 사용자의 플레이리스트 목록 상태
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchTags() {
+    async function fetchData() {
       setLoading(true);
       try {
-        const data = await getTags();
-        setTags(data || []);
-        console.log("불러온 태그:", data);
+        // 태그와 플레이리스트를 동시에 불러옵니다.
+        const [tagsData, playlistsData] = await Promise.all([
+          getTags(),
+          getMyPlaylists(), // 사용자의 플레이리스트를 가져오는 함수
+        ]);
+        setTags(tagsData || []);
+        setPlaylists(playlistsData || []);
       } catch (err) {
-        console.error("태그 불러오기 오류:", err);
+        console.error("데이터 불러오기 오류:", err);
+        alert("태그 또는 플레이리스트를 불러오는 데 실패했습니다.");
       } finally {
         setLoading(false);
       }
     }
-    fetchTags();
+    fetchData();
   }, []);
 
   const handleGoBack = () => {
@@ -48,17 +58,26 @@ function EditListPage() {
   const handleTitleChange = (value) =>
     setFormData((prev) => ({ ...prev, title: value }));
 
+  const handleAuthorChange = (value) =>
+    setFormData((prev) => ({ ...prev, author: value }));
+
   const handleContentChange = (value) =>
     setFormData((prev) => ({ ...prev, content: value }));
 
   const handleTagsChange = (selectedTags) =>
     setFormData((prev) => ({ ...prev, tags: selectedTags }));
 
+  const handlePlaylistChange = (value) => {
+    setFormData((prev) => ({ ...prev, playlistId: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.title || !formData.content || !formData.image) {
-      alert("제목, 내용, 이미지를 모두 입력해주세요!");
+    if (
+      !formData.playlistId || !formData.title || !formData.author || !formData.content || !formData.image
+    ) {
+      alert("플레이리스트 선택, 제목, 저자, 내용, 이미지를 모두 입력해주세요!");
       return;
     }
 
@@ -72,10 +91,6 @@ function EditListPage() {
     );
     const tagIds = tagObjects.map((t) => t.tag_id || t.id);
 
-    console.log("선택된 태그:", formData.tags);
-    console.log("불러온 태그 목록:", tags);
-    console.log("변환된 tagIds:", tagIds);
-
     if (tagIds.length === 0) {
       alert("선택된 태그의 ID를 찾을 수 없습니다!");
       return;
@@ -84,25 +99,28 @@ function EditListPage() {
     setIsSubmitting(true);
 
     try {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
+      const tempBookId = `bid_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
-      if (userError) throw userError;
-      if (!user) throw new Error("로그인된 사용자를 찾을 수 없습니다.");
-
-      const result = await postPlayList({
-        user,
-        title: formData.title,
-        summary: formData.content,
+      const result = await postPlaylistItem({
+        playlistId: Number(formData.playlistId),
+        bookData: {
+          book_id: tempBookId, 
+          title: formData.title,
+          author: formData.author, 
+        },
+        userReview: {
+          rating: 0, 
+          comment: formData.content, 
+          readDate: new Date(),
+        },
         image: formData.image,
-        tags: tagIds, 
+        tags: tagIds,
       });
 
       if (result.success) {
-        alert("플레이리스트 등록 완료!");
-        navigate("/");
+        alert("책 등록 완료!");
+        const newItemId = result.data.item_id;
+        navigate(`/list/${formData.playlistId}/book/${newItemId}`);
       } else {
         alert("등록 실패: " + (result.error?.message || "알 수 없는 오류"));
       }
@@ -127,12 +145,35 @@ function EditListPage() {
         >
           ←
         </button>
+
+        <div className="flex flex-col gap-2">
+          <SelectPlaylist
+          label="플레이리스트 선택"
+          placeholder="책을 추가할 플레이리스트를 선택하세요"
+          value={formData.playlistId}
+          onChange={handlePlaylistChange}
+          disabled={loading}
+          options={playlists.map((p) => ({
+            value: p.id,
+            label: p.title,
+          }))}
+        />
+        </div>
+
         <TextInput
           onChange={handleTitleChange}
-          placeholder="제목을 입력하세요..."
-          label="플레이리스트 제목"
+          placeholder="책 제목을 입력하세요..."
+          label="책 제목"
           maxLength={50}
         />
+        
+        <TextInput
+          onChange={handleAuthorChange}
+          placeholder="저자를 입력하세요..."
+          label="저자"
+          maxLength={30}
+        />
+
         <div className="flex flex-col gap-2">
           <span className="font-bold text-white text-[18px]">태그 선택</span>
           {loading ? (
@@ -143,12 +184,15 @@ function EditListPage() {
             <TagDropdown tags={tags} onChange={handleTagsChange} />
           )}
         </div>
+
         <FileInput onChange={handleFileChange} label="썸네일 선택" />
+        
         <TextArea
           onChange={handleContentChange}
           label="한줄평 작성하기"
           maxLength={25}
         />
+        
         <button
           type="submit"
           disabled={isSubmitting}
@@ -165,4 +209,4 @@ function EditListPage() {
   );
 }
 
-export default EditListPage;
+export default AddBookPage;

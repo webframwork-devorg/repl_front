@@ -6,6 +6,7 @@ const routes = {
   error: "*",
   edit: "/edit",
   book: "/list/:id/book/:bookId",
+  addBook: "/book/add"
 };
 
 export default routes;

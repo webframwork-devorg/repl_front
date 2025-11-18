@@ -11,6 +11,7 @@ import AuthCallback from "@/pages/auth/AuthCallback";
 import EditPage from "@/pages/edit/EditPage";
 import EditListPage from "@/pages/edit/list/EditListPage";
 import ProtectedRoute from "@/components/commons/routes/ProtectedRoutes";
+import AddBookPage from "@/pages/book/AddBookPage";
 
 import { useAuthStore } from "@/stores/useAuthStore";
 import { supabase } from "@/api/supabaseClient";
@@ -69,6 +70,14 @@ function App() {
         element={
           <ProtectedRoute>
             <EditListPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={routes.addBook}
+        element={
+          <ProtectedRoute>
+            <AddBookPage />
           </ProtectedRoute>
         }
       />
