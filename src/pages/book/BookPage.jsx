@@ -1,6 +1,6 @@
 import CommentBox from "@/components/commons/textBox/CommentBox";
 import Bookmark from "@/components/commons/bookmarks/Bookmark";
-import BookInfo from "@/components/commons/bookInfo/BookInfo";
+import BookInfo from "@/components/commons/bookinfo/BookInfo";
 import { getBookDetails } from "@/api/books/getBookDetails";
 import { getPlaylistItems } from "@/api/playlists/getPlaylistItems";
 
