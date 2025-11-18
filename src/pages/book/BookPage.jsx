@@ -26,7 +26,7 @@ const initialReviewState = {
 
 function BookPage() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { bookId } = useParams();
 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -36,13 +36,13 @@ function BookPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loadBookData = useCallback(async () => {
-    if (!id) return; 
+    if (!bookId) return; 
     
     try {
       setLoading(true);
       const [bookData, playlistData] = await Promise.all([
-        getBookDetails(id),
-        getPlaylistItems(id),
+        getBookDetails(bookId),
+        getPlaylistItems(bookId),
       ]);
 
       const bookInfo = bookData?.bookInfo ?? {};
@@ -82,7 +82,7 @@ function BookPage() {
     } finally {
       setLoading(false);
     }
-  }, [id]); // id가 변경될 때만 함수 새로 생성
+  }, [bookId]); // id가 변경될 때만 함수 새로 생성
 
   useEffect(() => {
     loadBookData();
