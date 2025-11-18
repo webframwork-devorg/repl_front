@@ -180,7 +180,7 @@ function ListPage() {
                       src={item.book.cover} 
                       className="w-full h-auto object-cover cursor-pointer rounded hover:opacity-80 transition-opacity" 
                       alt={item.book.title} 
-                      onClick={() => navigate(`/list/${item.id}/book/${item.bookId}`)}
+                      onClick={() => navigate(`/list/${id}/book/${item.bookId}`)}
                     />
                   )}
                 </div>
