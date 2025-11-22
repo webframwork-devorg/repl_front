@@ -38,6 +38,10 @@ function EditListPage() {
     fetchTags();
   }, []);
 
+  const handleGoBack = () => {
+    navigate(`/`);
+  };
+
   const handleFileChange = (data) =>
     setFormData((prev) => ({ ...prev, image: data }));
 
@@ -115,7 +119,14 @@ function EditListPage() {
       onSubmit={handleSubmit}
       className="min-h-screen bg-black text-white flex flex-col items-center justify-start gap-8 py-10 px-4"
     >
-      <div className="w-full max-w-2xl flex flex-col gap-6">
+      <div className="w-full max-w-2xl relative flex flex-col gap-6">
+        <button
+          type="button"
+          onClick={handleGoBack}
+          className="absolute -top-8 left-0 text-[20px] font-semibold text-white transition-opacity hover:opacity-75"
+        >
+          ←
+        </button>
         <TextInput
           onChange={handleTitleChange}
           placeholder="제목을 입력하세요..."

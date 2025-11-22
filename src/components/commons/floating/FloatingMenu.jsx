@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { FaPlus, FaPencilAlt, FaTrash } from "react-icons/fa";
+import { FaPlus, FaPencilAlt } from "react-icons/fa";
+import { AiOutlineBook } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 
 function FloatingMenu() {
@@ -9,7 +10,7 @@ function FloatingMenu() {
   
   const menuItems = [
     { icon: <FaPencilAlt />, label: "수정", path: "/edit/list" },
-    { icon: <FaTrash />, label: "삭제", path: "/delete" },
+    { icon: <AiOutlineBook />, label: "추가", path: "/book/add" },
   ];
 
   const showFloatingMenuHandler = () => {

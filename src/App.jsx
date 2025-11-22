@@ -7,9 +7,8 @@ import LandingPage from "@/pages/landing/LandingPage";
 import ListPage from "@/pages/list/ListPage";
 import ErrorPage from "@/pages/error/ErrorPage";
 import BookPage from "@/pages/book/BookPage";
-import PlaylistBookAddPage from "@/pages/edit/PlaylistBookAddPage"; 
+import AddBookPage from "@/pages/book/AddBookPage";
 import AuthCallback from "@/pages/auth/AuthCallback";
-import EditPage from "@/pages/edit/EditPage";
 import EditListPage from "@/pages/edit/list/EditListPage";
 import ProtectedRoute from "@/components/commons/routes/ProtectedRoutes";
 
@@ -72,22 +71,6 @@ function App() {
         }
       />
       <Route
-        path={routes.edit}
-        element={
-          <ProtectedRoute>
-            <EditPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path={routes.bookAdd}
-        element={
-          <ProtectedRoute>
-            <PlaylistBookAddPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
         path={routes.book}
         element={
           <ProtectedRoute>
@@ -95,6 +78,14 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path={routes.bookAdd} 
+        element={
+          <ProtectedRoute>
+            <AddBookPage />
+          </ProtectedRoute>
+  }
+/>
     </Routes>
   );
 }
