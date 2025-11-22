@@ -4,6 +4,7 @@ import TextArea from "@/components/commons/inputs/TextArea";
 import SelectPlaylist from "@/components/commons/dropdowns/SelectPlaylist";
 import { getMyPlaylists } from "@/api/playlists/getMyPlaylists";
 import { addBookToPlaylist } from "@/api/books/addBookToPlaylist"; // api 탭 supabase 쿼리 따로 분리
+import { searchGoogleBooks } from "@/api/books/searchBooks"; // 구글북스 api 
 import BasicButton from "@/components/commons/buttons/BasicButton";
 
 function AddBookPage() {
@@ -43,17 +44,11 @@ function AddBookPage() {
   }, []);
 
   const handleSearch = async () => {
-    if (!query) return;
-
-    const apiKey = "AIzaSyA1vPxe_5bYtst29GELbF2_-jK3gMmDNBg";
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}&maxResults=10`;
-
     try {
-      const response = await fetch(url);
-      const data = await response.json();
-      setBooks(data.items || []);
+      const results = await searchGoogleBooks(query);
+      setBooks(results);
     } catch (error) {
-      alert("검색에 실패했습니다.");
+      alert(error.message);
     }
   };
 

@@ -1,4 +1,4 @@
-// /api/books/addBookToPlaylist.js
+//책 추가 플레이리스트 쿼리 소스 분리
 import { supabase } from "@/api/supabaseClient";
 
 /**
