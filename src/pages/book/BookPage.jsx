@@ -200,7 +200,7 @@ function BookPage() {
         <CommentBox text={review.comment || "코멘트가 아직 없습니다."} />
       </div>
 
-      {/* 북마크 영역 (버튼 포함) */}
+      {/* 북마크 영역 */}
       <div className="w-full h-5 flex justify-center">
         <div className="w-95 flex justify-between items-center px-4 py-2">
           <p className="font-semibold text-[#828282] text-sm">
