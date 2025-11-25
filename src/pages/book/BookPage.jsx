@@ -25,7 +25,7 @@ const initialReviewState = {
 
 function BookPage() {
   const navigate = useNavigate();
-  const { bookId } = useParams(); // URL에서 bookId 가져오기
+  const { bookId } = useParams(); 
 
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,7 +34,7 @@ function BookPage() {
   const [review, setReview] = useState(initialReviewState);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null); // 로그인 유저 정보
+  const [currentUser, setCurrentUser] = useState(null); 
 
   const loadBookData = useCallback(async () => {
     if (!bookId) return; 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { supabase } from "@/api/supabaseClient"; // Supabase 클라이언트 import
+import { supabase } from "@/api/supabaseClient"; 
 
-// 1. 북마크 색상 및 ID 
+// 북마크 색상 및 ID 
 const BOOKMARK_COLORS = [
   { id: 1, hex: "#FFFFFF", name: "White" },
   { id: 4, hex: "#D9D9F9", name: "Blue" },
@@ -13,8 +13,8 @@ const BOOKMARK_COLORS = [
 /**
  * 책갈피(인용구) 추가 모달
  * @param {object} props
- * @param {function} props.onClose - 모달 닫기 함수
- * @param {string|number} props.playlistItemId - 이 책갈피가 속할 'playlist_item'의 ID
+ * @param {function} props.onClose 
+ * @param {string|number} props.playlistItemId 
  */
 function AddBookmarkModal({ onClose, playlistItemId }) {
 
@@ -24,14 +24,12 @@ function AddBookmarkModal({ onClose, playlistItemId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // 텍스트 입력 변경 핸들러
   const handleTextChange = (e) => {
     if (e.target.value.length <= 84) {
       setPassageText(e.target.value);
     }
   };
 
-  // Supabase에 저장하는 '완료' 버튼 핸들러
   const handleSubmit = async () => {
     if (!passageText) {
       setError("북마크할 내용을 입력해주세요.");
@@ -48,7 +46,7 @@ function AddBookmarkModal({ onClose, playlistItemId }) {
     try {
       const { error } = await supabase.from("favorite_passages").insert([
         {
-          item_id: playlistItemId, // BookPage에서 받은 ID
+          item_id: playlistItemId, 
           passage_text: passageText,
           page_number: pageNumber ? parseInt(pageNumber, 10) : null,
           background_id: selectedBgId,
@@ -57,7 +55,6 @@ function AddBookmarkModal({ onClose, playlistItemId }) {
 
       if (error) throw error;
 
-      // 성공 시 모달 닫기
       onClose();
     } catch (error) {
       console.error("북마크 저장 실패:", error.message);
@@ -136,14 +133,14 @@ function AddBookmarkModal({ onClose, playlistItemId }) {
           />
         </div>
 
-        {/* 내용 입력 (Textarea) */}
+        {/* 내용 입력 */}
         <div className="mb-4">
           <textarea
             value={passageText}
             onChange={handleTextChange}
             placeholder="북마크할 내용을 입력하세요"
             className="w-full h-40 p-4 bg-gray-700 text-white rounded-md placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-            maxLength={84} // 글자 수 제한
+            maxLength={84} 
           />
           <div className="text-right text-gray-400 text-sm mt-1">
             {passageText.length} / 84
