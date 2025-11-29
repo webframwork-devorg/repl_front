@@ -40,8 +40,6 @@ export async function getPlaylists(sort = "latest", selectedTags = []) {
 
     if (error) throw error;
 
-    console.log("🎧 Supabase 원본 데이터:", data);
-
     let filtered = data;
 
     if (selectedTags.length === 1) {
@@ -95,7 +93,6 @@ export async function getPlaylists(sort = "latest", selectedTags = []) {
         })) || [],
     }));
 
-    console.log("최종 변환 데이터:", formatted);
     return formatted;
   } catch (error) {
     console.error("플레이리스트 불러오기 실패:", error.message);
