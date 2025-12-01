@@ -17,7 +17,6 @@ const initialReviewState = {
   passages: [],
   rating: null,
   readDate: null,
-  tags: [],
   userName: "작성자 정보 없음",
   playlistId: null,
   playlistItemId: null,
@@ -75,7 +74,6 @@ function BookPage() {
           passages: firstReviewItem.passages || [],
           rating: firstReviewItem.rating ?? null,
           readDate: firstReviewItem.readDate ?? null,
-          tags: firstReviewItem.tags || [],
           userName: nickname || userId || "작성자 정보 없음",
           playlistId: firstReviewItem.playlistInfo?.id || null, 
           playlistItemId: itemId || null,
@@ -189,7 +187,6 @@ function BookPage() {
               image={book.image}
               rating={review.rating}
               readDate={review.readDate}
-              tags={review.tags}
             />
           </div>
         )}
