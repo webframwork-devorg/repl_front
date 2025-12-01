@@ -9,9 +9,8 @@ import defaultBookImage from "@/assets/images/no-image.svg";
  * @param {string} props.image - 책 표지 이미지 URL
  * @param {number} props.rating - 별점
  * @param {string} props.readDate - 읽은 날짜
- * @param {string[]} props.tags - 태그 배열
  */
-function BookInfo({ title, author, image, rating, readDate, tags }) {
+function BookInfo({ title, author, image, rating, readDate }) {
 
   const [isFlipped, setIsFlipped] = useState(false);
   
@@ -20,7 +19,6 @@ function BookInfo({ title, author, image, rating, readDate, tags }) {
   const displayImage = image || defaultBookImage;  
   const displayRating = rating ? `⭐ ${rating}` : "평가 없음";
   const displayReadDate = readDate || "날짜 미지정";
-  const displayTags = tags && tags.length > 0 ? tags : ["태그 없음"];
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -72,17 +70,6 @@ function BookInfo({ title, author, image, rating, readDate, tags }) {
             {displayReadDate}
           </p>
 
-
-          <div className="flex flex-wrap justify-center gap-1 mt-2">
-            {displayTags.map((tag) => (
-              <span 
-                key={tag} 
-                className="px-2 py-0.5 bg-gray-200 text-gray-700 rounded-full text-xs"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
         </div>
 
       </div>

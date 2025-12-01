@@ -24,11 +24,6 @@ export async function getPlaylistItems(bookId) {
           )
         ),
 
-        playlistitem_tags (
-          tag_id,
-          tags ( tag_name )
-        ),
-
         favorite_passages (
           passage_id,
           passage_text,
@@ -58,10 +53,6 @@ export async function getPlaylistItems(bookId) {
         creatorId: item.playlists?.user_id || null,
         creatorNickname: item.playlists?.users?.profile_nickname || null,
       },
-      tags:
-        item.playlistitem_tags
-          ?.map((t) => t.tags?.tag_name)
-          .filter(Boolean) || [],
       passages: item.favorite_passages || [],
     }));
 
