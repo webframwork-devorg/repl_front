@@ -1,8 +1,9 @@
-# 💜 re:pl 💜
+# 💜 Re:pl 💜
 
 > **React와 Vite를 활용한 프론트엔드 프로젝트**
 
-이 프로젝트는 최신 React v19와 Vite v7을 기반으로 구축된 웹 애플리케이션입니다. 빠르고 효율적인 개발 환경을 구성하고, Supabase를 활용한 백엔드 연동 및 Tailwind CSS를 이용한 스타일링을 적용하였습니다.
+- 이 프로젝트는 최신 React v19와 Vite v7을 기반으로 구축된 모바일 버전 웹 애플리케이션입니다. 
+- 빠르고 효율적인 개발 환경을 구성하고, Supabase를 활용한 백엔드 연동 및 Tailwind CSS를 이용한 스타일링을 적용하였습니다.
 
 <br>
 
@@ -57,7 +58,6 @@ React v19와 Supabase를 기반으로 구축되었으며, 사용자는 태그를
 
 ### API & Testing
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
 ![Vitest](https://img.shields.io/badge/Vitest-Testing-green?style=for-the-badge)
 ![Playwright](https://img.shields.io/badge/Playwright-E2E-green?style=for-the-badge&logo=playwright&logoColor=white)
 
@@ -149,11 +149,11 @@ npm start 또는 npm run dev
 ---
 ### BookPage (주소: /list/{id}/book/{id})
 - 플레이리스트에 담긴 책의 상세 내용을 볼 수 있습니다.
-- 책의 사진을 누르면 제목, 작가, 별점, 읽은 날짜, 태그 등을 확인할 수 있습니다. 
+- 책의 사진을 누르면 제목, 작가, 별점, 읽은 날짜 등을 확인할 수 있습니다. 
 - 좋아요 기능을 통해 마음에 드는 책이라면, 카드 하단의 하트 아이콘을 클릭하여 즉각적으로 공감을 표현할 수 있습니다.
 - 책갈피의 갯수를 확인하고, + 버튼을 통해 책갈피를 추가할 수 있습니다. 
 <img width="200" height="500" alt="image" src="https://github.com/user-attachments/assets/61628187-aabe-4db9-ad8f-75f39a97b2dc" />
-<img width="200" height="500" alt="image" src="https://github.com/user-attachments/assets/6b8ad28f-a132-46aa-8aba-5082ce6eef56" />
+<img width="200" height="500" alt="image" src="https://github.com/user-attachments/assets/921b4d6f-e2f8-4bd4-84eb-a09925f02809" />
 
 ---
 ### AddBookPage (주소: /book/add)
@@ -169,5 +169,4 @@ npm start 또는 npm run dev
 - 사용자가 원하는 플레이리스트를 추가합니다.
 - 제목, 태그, 대표사진, 한줄평을 작성하여 원하는 대표 사진으로 플레이리스트를 생성합니다. 
 <img width="200" height="500" alt="image" src="https://github.com/user-attachments/assets/c9ce7520-0d68-4836-9bbf-41d4abe92192" />
-
 
